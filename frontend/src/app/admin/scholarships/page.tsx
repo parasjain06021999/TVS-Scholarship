@@ -37,7 +37,7 @@ export default function AdminScholarshipsPage() {
   const fetchRows = async () => {
     try {
       setLoading(true);
-      const res = await fetch('https://tvs-scholarship.onrender.com/scholarships', {
+      const res = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.SCHOLARSHIPS), {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       if (!res.ok) throw new Error('Failed to load scholarships');

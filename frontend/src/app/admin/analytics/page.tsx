@@ -249,7 +249,7 @@ export default function AnalyticsPage() {
         // Filter applications based on status
         let filteredApplications = applicationsData;
         if (filter !== 'All') {
-          filteredApplications = applicationsData.filter(app => {
+          filteredApplications = applicationsData.filter((app: any) => {
             const status = app.status;
             return status === filter;
           });
@@ -302,6 +302,8 @@ export default function AnalyticsPage() {
     const instituteCount: Record<string, number> = {};
 
     applications.forEach(app => {
+      console.log('Processing application:', app);
+      
       // State distribution
       const state = app.student?.state || 'Unknown';
       stateCount[state] = (stateCount[state] || 0) + 1;
@@ -314,26 +316,35 @@ export default function AnalyticsPage() {
       const gender = app.applicationData?.personalInfo?.gender || 'Unknown';
       genderCount[gender] = (genderCount[gender] || 0) + 1;
 
-      // Class distribution
-      const currentYear = app.applicationData?.educationInfo?.currentYear;
+      // Class distribution - Check multiple possible locations
+      const currentYear = app.academicInfo?.currentYear || 
+                         app.applicationData?.educationInfo?.currentYear ||
+                         app.applicationData?.personalInfo?.currentYear;
       const classType = currentYear ? `Year ${currentYear}` : 'Unknown';
       classCount[classType] = (classCount[classType] || 0) + 1;
 
-      // Degree distribution
-      const course = app.applicationData?.educationInfo?.currentCourse || 'Unknown';
+      // Degree distribution - Check multiple possible locations
+      const course = app.academicInfo?.courseOfStudy || 
+                    app.applicationData?.educationInfo?.currentCourse ||
+                    app.applicationData?.personalInfo?.courseOfStudy || 'Unknown';
       degreeCount[course] = (degreeCount[course] || 0) + 1;
 
-      // Father occupation
-      const occupation = app.applicationData?.familyInfo?.fatherOccupation || 'Unknown';
+      // Father occupation - Check multiple possible locations
+      const occupation = app.familyInfo?.fatherOccupation || 
+                        app.applicationData?.familyInfo?.fatherOccupation || 'Unknown';
       occupationCount[occupation] = (occupationCount[occupation] || 0) + 1;
 
-      // Father income
-      const income = app.applicationData?.familyInfo?.fatherIncome || 0;
+      // Father income - Check multiple possible locations
+      const income = app.familyInfo?.familyIncome || 
+                    app.familyInfo?.fatherIncome ||
+                    app.applicationData?.familyInfo?.fatherIncome || 0;
       const incomeRange = getIncomeRange(income);
       incomeCount[incomeRange] = (incomeCount[incomeRange] || 0) + 1;
 
-      // Institute type (mock based on institution name)
-      const institute = app.applicationData?.educationInfo?.currentInstitution || 'Unknown';
+      // Institute type - Check multiple possible locations
+      const institute = app.academicInfo?.collegeName || 
+                       app.academicInfo?.universityName ||
+                       app.applicationData?.educationInfo?.currentInstitution || 'Unknown';
       const instituteType = getInstituteType(institute);
       instituteCount[instituteType] = (instituteCount[instituteType] || 0) + 1;
     });

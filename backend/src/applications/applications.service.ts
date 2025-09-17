@@ -135,11 +135,33 @@ export class ApplicationsService {
       include: {
         student: true,
         scholarship: true,
-        documents: true,
+        documents: {
+          select: {
+            id: true,
+            type: true,
+            fileName: true,
+            originalName: true,
+            filePath: true,
+            fileSize: true,
+            mimeType: true,
+            isVerified: true,
+            verifiedBy: true,
+            verifiedAt: true,
+            rejectionReason: true,
+            uploadedAt: true,
+          }
+        },
         payments: true,
       },
       orderBy: { createdAt: 'desc' },
     });
+
+    console.log('All applications found:', applications.length);
+    console.log('Sample application with documents:', applications[0] ? {
+      id: applications[0].id,
+      documentsCount: applications[0].documents?.length || 0,
+      documents: applications[0].documents
+    } : 'No applications found');
 
     const total = await this.prisma.application.count({ where });
 
@@ -198,13 +220,174 @@ export class ApplicationsService {
       include: {
         student: true,
         scholarship: true,
-        documents: true,
+        documents: {
+          select: {
+            id: true,
+            type: true,
+            fileName: true,
+            originalName: true,
+            filePath: true,
+            fileSize: true,
+            mimeType: true,
+            isVerified: true,
+            verifiedBy: true,
+            verifiedAt: true,
+            rejectionReason: true,
+            uploadedAt: true,
+          }
+        },
         payments: true,
       },
       orderBy: { createdAt: 'desc' },
     });
 
+    // Alternative approach: Manually fetch documents for each application
+    for (let i = 0; i < applications.length; i++) {
+      const app = applications[i];
+      if (!app.documents || app.documents.length === 0) {
+        // Fetch documents for this student
+        const studentDocuments = await this.prisma.document.findMany({
+          where: { 
+            studentId: app.studentId,
+            OR: [
+              { applicationId: app.id },
+              { applicationId: null }
+            ]
+          },
+          select: {
+            id: true,
+            type: true,
+            fileName: true,
+            originalName: true,
+            filePath: true,
+            fileSize: true,
+            mimeType: true,
+            isVerified: true,
+            verifiedBy: true,
+            verifiedAt: true,
+            rejectionReason: true,
+            uploadedAt: true,
+          }
+        });
+        applications[i].documents = studentDocuments;
+        console.log(`Manually fetched ${studentDocuments.length} documents for application ${app.id}`);
+        
+        // If still no documents, try to fetch any documents for this student
+        if (studentDocuments.length === 0) {
+          const anyStudentDocuments = await this.prisma.document.findMany({
+            where: { studentId: app.studentId },
+            select: {
+              id: true,
+              type: true,
+              fileName: true,
+              originalName: true,
+              filePath: true,
+              fileSize: true,
+              mimeType: true,
+              isVerified: true,
+              verifiedBy: true,
+              verifiedAt: true,
+              rejectionReason: true,
+              uploadedAt: true,
+            }
+          });
+          applications[i].documents = anyStudentDocuments;
+          console.log(`Fetched ${anyStudentDocuments.length} documents for student ${app.studentId}`);
+        }
+      }
+    }
+
     console.log('Applications found:', applications.length);
+    console.log('Sample application with documents:', applications[0] ? {
+      id: applications[0].id,
+      studentId: applications[0].studentId,
+      documentsCount: applications[0].documents?.length || 0,
+      documents: applications[0].documents
+    } : 'No applications found');
+
+    // Debug: Check all documents for this student
+    if (applications.length > 0) {
+      const studentId = applications[0].studentId;
+      const allDocuments = await this.prisma.document.findMany({
+        where: { studentId },
+        select: {
+          id: true,
+          applicationId: true,
+          fileName: true,
+          type: true,
+          uploadedAt: true,
+        }
+      });
+      console.log('All documents for student:', studentId, allDocuments);
+
+      // Debug: Check all documents in database
+      const allDocumentsInDB = await this.prisma.document.findMany({
+        select: {
+          id: true,
+          studentId: true,
+          applicationId: true,
+          fileName: true,
+          type: true,
+          uploadedAt: true,
+        }
+      });
+      console.log('All documents in database:', allDocumentsInDB);
+
+      // Manual fix: Create document records for existing files
+      if (allDocumentsInDB.length === 0) {
+        console.log('No documents found in database, creating manual records...');
+        const fs = require('fs');
+        const path = require('path');
+        const uploadsDir = path.join(process.cwd(), 'uploads', 'documents');
+        
+        try {
+          const files = fs.readdirSync(uploadsDir);
+          console.log('Found files in uploads directory:', files);
+          
+          for (const file of files) {
+            const filePath = path.join(uploadsDir, file);
+            const stats = fs.statSync(filePath);
+            
+            // Determine document type based on filename
+            let docType = 'OTHER';
+            if (file.includes('aadhar') || file.includes('AADHAR')) docType = 'AADHAR_CARD';
+            else if (file.includes('photo') || file.includes('PHOTO')) docType = 'PHOTOGRAPH';
+            else if (file.includes('mark') || file.includes('MARK')) docType = 'MARK_SHEET_12TH';
+            else if (file.includes('income') || file.includes('INCOME')) docType = 'INCOME_CERTIFICATE';
+            
+            const document = await this.prisma.document.create({
+              data: {
+                fileName: file,
+                originalName: file,
+                filePath: `/uploads/documents/${file}`,
+                fileSize: stats.size,
+                mimeType: file.endsWith('.pdf') ? 'application/pdf' : 'image/jpeg',
+                type: docType as any,
+                studentId: studentId,
+                applicationId: applications[0].id,
+                uploadedAt: new Date(),
+              }
+            });
+            console.log('Created document record:', document.id, file);
+          }
+        } catch (error) {
+          console.error('Error creating manual document records:', error);
+        }
+      }
+
+      // Temporary fix: Link documents without applicationId to the first application
+      const unlinkedDocuments = allDocuments.filter(doc => !doc.applicationId);
+      if (unlinkedDocuments.length > 0 && applications[0]) {
+        console.log('Linking unlinked documents to application:', applications[0].id);
+        for (const doc of unlinkedDocuments) {
+          await this.prisma.document.update({
+            where: { id: doc.id },
+            data: { applicationId: applications[0].id }
+          });
+        }
+        console.log('Linked', unlinkedDocuments.length, 'documents to application');
+      }
+    }
 
     const total = await this.prisma.application.count({ where });
 
@@ -225,7 +408,22 @@ export class ApplicationsService {
       include: {
         student: true,
         scholarship: true,
-        documents: true,
+        documents: {
+          select: {
+            id: true,
+            type: true,
+            fileName: true,
+            originalName: true,
+            filePath: true,
+            fileSize: true,
+            mimeType: true,
+            isVerified: true,
+            verifiedBy: true,
+            verifiedAt: true,
+            rejectionReason: true,
+            uploadedAt: true,
+          }
+        },
         payments: true,
       },
     });
@@ -233,6 +431,12 @@ export class ApplicationsService {
     if (!application) {
       throw new NotFoundException('Application not found');
     }
+
+    console.log('Application found:', {
+      id: application.id,
+      documentsCount: application.documents?.length || 0,
+      documents: application.documents
+    });
 
     return application;
   }

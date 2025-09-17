@@ -138,15 +138,27 @@ export default function ApplicationDetailPage() {
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Category:</span>
-                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.category}</p>
+                      <p className="text-gray-900">{data?.additionalInfo?.category || data?.applicationData?.personalInfo?.category}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Date of Birth:</span>
-                      <p className="text-gray-900">{new Date(data?.applicationData?.personalInfo?.dateOfBirth).toLocaleDateString()}</p>
+                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.dateOfBirth ? new Date(data.applicationData.personalInfo.dateOfBirth).toLocaleDateString() : 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Aadhaar Number:</span>
-                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.aadhaarNumber}</p>
+                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.aadharNumber || data?.applicationData?.personalInfo?.aadhaarNumber || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Phone:</span>
+                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.phone || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Email:</span>
+                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.email || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">PAN Number:</span>
+                      <p className="text-gray-900">{data?.applicationData?.personalInfo?.panNumber || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -159,23 +171,27 @@ export default function ApplicationDetailPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <span className="text-sm font-medium text-gray-600">Current Course:</span>
-                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.currentCourse}</p>
+                      <p className="text-gray-900">{data?.academicInfo?.courseOfStudy || data?.applicationData?.educationInfo?.currentCourse || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Current Year:</span>
-                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.currentYear}</p>
+                      <p className="text-gray-900">{data?.academicInfo?.currentYear || data?.applicationData?.educationInfo?.currentYear || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Institution:</span>
-                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.currentInstitution}</p>
+                      <p className="text-gray-900">{data?.academicInfo?.collegeName || data?.applicationData?.educationInfo?.currentInstitution || 'N/A'}</p>
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-gray-600">CGPA:</span>
-                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.cgpa}</p>
+                      <span className="text-sm font-medium text-gray-600">University:</span>
+                      <p className="text-gray-900">{data?.academicInfo?.universityName || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Academic Percentage:</span>
+                      <p className="text-gray-900">{data?.academicInfo?.academicPercentage || data?.applicationData?.educationInfo?.cgpa || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Education Level:</span>
-                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.educationLevel}</p>
+                      <p className="text-gray-900">{data?.applicationData?.educationInfo?.educationLevel || 'N/A'}</p>
                     </div>
                   </div>
                   
@@ -205,35 +221,39 @@ export default function ApplicationDetailPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <span className="text-sm font-medium text-gray-600">Family Size:</span>
-                      <p className="text-gray-900">{data?.applicationData?.familyInfo?.familySize}</p>
+                      <p className="text-gray-900">{data?.familyInfo?.familySize || data?.applicationData?.familyInfo?.familySize || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Family Income:</span>
-                      <p className="text-gray-900">₹{data?.applicationData?.familyInfo?.familyIncome?.toLocaleString()}</p>
+                      <p className="text-gray-900">₹{(data?.familyInfo?.familyIncome || data?.applicationData?.familyInfo?.familyIncome)?.toLocaleString() || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Father's Name:</span>
-                      <p className="text-gray-900">{data?.applicationData?.familyInfo?.fatherName}</p>
+                      <p className="text-gray-900">{data?.familyInfo?.fatherName || data?.applicationData?.familyInfo?.fatherName || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Father's Occupation:</span>
-                      <p className="text-gray-900">{data?.applicationData?.familyInfo?.fatherOccupation}</p>
+                      <p className="text-gray-900">{data?.familyInfo?.fatherOccupation || data?.applicationData?.familyInfo?.fatherOccupation || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Father's Income:</span>
-                      <p className="text-gray-900">₹{data?.applicationData?.familyInfo?.fatherIncome?.toLocaleString()}</p>
+                      <p className="text-gray-900">₹{(data?.familyInfo?.fatherIncome || data?.applicationData?.familyInfo?.fatherIncome)?.toLocaleString() || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Mother's Name:</span>
-                      <p className="text-gray-900">{data?.applicationData?.familyInfo?.motherName}</p>
+                      <p className="text-gray-900">{data?.familyInfo?.motherName || data?.applicationData?.familyInfo?.motherName || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Mother's Occupation:</span>
-                      <p className="text-gray-900">{data?.applicationData?.familyInfo?.motherOccupation}</p>
+                      <p className="text-gray-900">{data?.familyInfo?.motherOccupation || data?.applicationData?.familyInfo?.motherOccupation || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Mother's Income:</span>
-                      <p className="text-gray-900">₹{data?.applicationData?.familyInfo?.motherIncome?.toLocaleString()}</p>
+                      <p className="text-gray-900">₹{(data?.familyInfo?.motherIncome || data?.applicationData?.familyInfo?.motherIncome)?.toLocaleString() || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Emergency Contact:</span>
+                      <p className="text-gray-900">{data?.familyInfo?.emergencyContact || data?.applicationData?.familyInfo?.emergencyContact || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -246,23 +266,48 @@ export default function ApplicationDetailPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <span className="text-sm font-medium text-gray-600">Bank Name:</span>
-                      <p className="text-gray-900">{data?.applicationData?.bankDetails?.bankName}</p>
+                      <p className="text-gray-900">{data?.financialInfo?.bankName || data?.applicationData?.bankDetails?.bankName || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">IFSC Code:</span>
-                      <p className="text-gray-900">{data?.applicationData?.bankDetails?.ifscCode}</p>
+                      <p className="text-gray-900">{data?.financialInfo?.ifscCode || data?.applicationData?.bankDetails?.ifscCode || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Branch Name:</span>
-                      <p className="text-gray-900">{data?.applicationData?.bankDetails?.branchName}</p>
+                      <p className="text-gray-900">{data?.financialInfo?.branchName || data?.applicationData?.bankDetails?.branchName || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Account Number:</span>
-                      <p className="text-gray-900">{data?.applicationData?.bankDetails?.accountNumber}</p>
+                      <p className="text-gray-900">{data?.financialInfo?.accountNumber || data?.applicationData?.bankDetails?.accountNumber || 'N/A'}</p>
                     </div>
                     <div>
                       <span className="text-sm font-medium text-gray-600">Account Holder Name:</span>
-                      <p className="text-gray-900">{data?.applicationData?.bankDetails?.accountHolderName}</p>
+                      <p className="text-gray-900">{data?.financialInfo?.accountHolderName || data?.applicationData?.bankDetails?.accountHolderName || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information */}
+              <div className="mb-6">
+                <h3 className="font-medium text-gray-900 mb-3">Additional Information</h3>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Category:</span>
+                      <p className="text-gray-900">{data?.additionalInfo?.category || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-gray-600">Future Goals:</span>
+                      <p className="text-gray-900">{data?.additionalInfo?.futureGoals || 'N/A'}</p>
+                    </div>
+                    <div className="md:col-span-2">
+                      <span className="text-sm font-medium text-gray-600">Why Scholarship:</span>
+                      <p className="text-gray-900">{data?.additionalInfo?.whyScholarship || 'N/A'}</p>
+                    </div>
+                    <div className="md:col-span-2">
+                      <span className="text-sm font-medium text-gray-600">Essay:</span>
+                      <p className="text-gray-900">{data?.additionalInfo?.essay || 'N/A'}</p>
                     </div>
                   </div>
                 </div>

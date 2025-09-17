@@ -7,18 +7,30 @@ export class DocumentsService {
 
   async uploadDocument(file: Express.Multer.File, body: any, userId: string) {
     try {
+      console.log('Uploading document:', {
+        fileName: file.originalname,
+        filePath: file.path,
+        fileSize: file.size,
+        mimeType: file.mimetype,
+        type: body.type || 'OTHER',
+        studentId: userId,
+        applicationId: body.applicationId || null,
+      });
+
       const document = await this.prisma.document.create({
         data: {
           fileName: file.originalname,
+          originalName: file.originalname,
           filePath: file.path,
           fileSize: file.size,
           mimeType: file.mimetype,
-          type: body.type || 'OTHER',
-          // status: 'UPLOADED', // Field doesn't exist in schema
+          type: (body.type || 'OTHER') as any,
           studentId: userId,
           applicationId: body.applicationId || null,
-        } as any,
+        },
       });
+
+      console.log('Document created successfully:', document);
 
       return {
         success: true,
@@ -26,6 +38,7 @@ export class DocumentsService {
         data: document,
       };
     } catch (error) {
+      console.error('Error uploading document:', error);
       throw new Error(`Failed to upload document: ${error.message}`);
     }
   }

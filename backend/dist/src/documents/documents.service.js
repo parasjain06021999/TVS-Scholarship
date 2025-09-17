@@ -18,17 +18,28 @@ let DocumentsService = class DocumentsService {
     }
     async uploadDocument(file, body, userId) {
         try {
+            console.log('Uploading document:', {
+                fileName: file.originalname,
+                filePath: file.path,
+                fileSize: file.size,
+                mimeType: file.mimetype,
+                type: body.type || 'OTHER',
+                studentId: userId,
+                applicationId: body.applicationId || null,
+            });
             const document = await this.prisma.document.create({
                 data: {
                     fileName: file.originalname,
+                    originalName: file.originalname,
                     filePath: file.path,
                     fileSize: file.size,
                     mimeType: file.mimetype,
-                    type: body.type || 'OTHER',
+                    type: (body.type || 'OTHER'),
                     studentId: userId,
                     applicationId: body.applicationId || null,
                 },
             });
+            console.log('Document created successfully:', document);
             return {
                 success: true,
                 message: 'Document uploaded successfully',
@@ -36,6 +47,7 @@ let DocumentsService = class DocumentsService {
             };
         }
         catch (error) {
+            console.error('Error uploading document:', error);
             throw new Error(`Failed to upload document: ${error.message}`);
         }
     }

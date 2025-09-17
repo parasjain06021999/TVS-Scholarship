@@ -169,18 +169,16 @@ export declare class ApplicationsService {
             };
             documents: {
                 id: string;
-                rejectionReason: string | null;
-                studentId: string;
+                rejectionReason: string;
                 isVerified: boolean;
-                applicationId: string | null;
                 type: import(".prisma/client").$Enums.DocumentType;
                 fileName: string;
                 originalName: string;
                 filePath: string;
                 fileSize: number;
                 mimeType: string;
-                verifiedBy: string | null;
-                verifiedAt: Date | null;
+                verifiedBy: string;
+                verifiedAt: Date;
                 uploadedAt: Date;
             }[];
             payments: {
@@ -288,18 +286,16 @@ export declare class ApplicationsService {
             };
             documents: {
                 id: string;
-                rejectionReason: string | null;
-                studentId: string;
+                rejectionReason: string;
                 isVerified: boolean;
-                applicationId: string | null;
                 type: import(".prisma/client").$Enums.DocumentType;
                 fileName: string;
                 originalName: string;
                 filePath: string;
                 fileSize: number;
                 mimeType: string;
-                verifiedBy: string | null;
-                verifiedAt: Date | null;
+                verifiedBy: string;
+                verifiedAt: Date;
                 uploadedAt: Date;
             }[];
             payments: {
@@ -406,18 +402,16 @@ export declare class ApplicationsService {
         };
         documents: {
             id: string;
-            rejectionReason: string | null;
-            studentId: string;
+            rejectionReason: string;
             isVerified: boolean;
-            applicationId: string | null;
             type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
             fileSize: number;
             mimeType: string;
-            verifiedBy: string | null;
-            verifiedAt: Date | null;
+            verifiedBy: string;
+            verifiedAt: Date;
             uploadedAt: Date;
         }[];
         payments: {

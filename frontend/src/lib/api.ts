@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 // MANDATORY: API utility with proper error handling
 class APIClient {
   // Base URL should match backend routes (no "/api" prefix unless backend sets global prefix)
-  private baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://tvs-scholarship.onrender.com';
+  private baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://tvs-scholarship.onrender.com';
   private timeout = 30000; // 30 seconds
 
   async request(endpoint: string, options: RequestInit = {}) {

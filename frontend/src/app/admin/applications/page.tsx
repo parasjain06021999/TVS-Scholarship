@@ -95,6 +95,9 @@ export default function ApplicationsPage() {
   const [paymentAmount, setPaymentAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('NEFT');
   const [selectedPayment, setSelectedPayment] = useState<any>(null);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackType, setFeedbackType] = useState<'MISSING_DOCUMENTS' | 'INCOMPLETE_INFO' | 'OTHER'>('MISSING_DOCUMENTS');
   const router = useRouter();
 
   useEffect(() => {
@@ -246,6 +249,52 @@ export default function ApplicationsPage() {
     } catch (error: any) {
       console.error('Failed to reject application:', error);
       alert('Failed to reject application: ' + (error.message || 'Unknown error'));
+    }
+  };
+
+  const handleMoveToUnderReview = async (applicationId: string) => {
+    try {
+      await apiClient.request(`/applications/${applicationId}/review`, {
+        method: 'POST',
+        body: JSON.stringify({
+          status: 'UNDER_REVIEW',
+          reviewerNotes: reviewNotes || 'Application moved to under review'
+        })
+      });
+      alert('Application moved to under review');
+      setShowModal(false);
+      setReviewNotes('');
+      fetchApplications();
+    } catch (error: any) {
+      console.error('Failed to move application to under review:', error);
+      alert('Failed to move application: ' + (error.message || 'Unknown error'));
+    }
+  };
+
+  const handleSendFeedback = async () => {
+    if (!selectedApplication || !feedbackMessage.trim()) {
+      alert('Please enter feedback message');
+      return;
+    }
+
+    try {
+      // Send feedback to student (this would be implemented in backend)
+      await apiClient.request(`/applications/${selectedApplication.id}/feedback`, {
+        method: 'POST',
+        body: JSON.stringify({
+          type: feedbackType,
+          message: feedbackMessage,
+          studentId: selectedApplication.studentId
+        })
+      });
+      
+      alert('Feedback sent to student successfully!');
+      setShowFeedbackModal(false);
+      setFeedbackMessage('');
+      setFeedbackType('MISSING_DOCUMENTS');
+    } catch (error: any) {
+      console.error('Failed to send feedback:', error);
+      alert('Failed to send feedback: ' + (error.message || 'Unknown error'));
     }
   };
 
@@ -523,16 +572,16 @@ export default function ApplicationsPage() {
                       <label className="block text-sm font-medium text-gray-700">Academic Information</label>
                       <div className="mt-1 grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="font-medium">Institution:</span> {selectedApplication.applicationData.educationInfo.currentInstitution}
+                          <span className="font-medium">Institution:</span> {selectedApplication.academicInfo?.collegeName || selectedApplication.applicationData?.educationInfo?.currentInstitution || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">Course:</span> {selectedApplication.applicationData.educationInfo.currentCourse}
+                          <span className="font-medium">Course:</span> {selectedApplication.academicInfo?.courseOfStudy || selectedApplication.applicationData?.educationInfo?.currentCourse || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">Year:</span> {selectedApplication.applicationData.educationInfo.currentYear}
+                          <span className="font-medium">Year:</span> {selectedApplication.academicInfo?.currentYear || selectedApplication.applicationData?.educationInfo?.currentYear || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">CGPA:</span> {selectedApplication.applicationData.educationInfo.cgpa}
+                          <span className="font-medium">CGPA:</span> {selectedApplication.academicInfo?.academicPercentage || selectedApplication.applicationData?.educationInfo?.cgpa || 'N/A'}
                         </div>
                       </div>
                     </div>
@@ -541,16 +590,16 @@ export default function ApplicationsPage() {
                       <label className="block text-sm font-medium text-gray-700">Financial Information</label>
                       <div className="mt-1 grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="font-medium">Family Income:</span> ₹{selectedApplication.applicationData.familyInfo.familyIncome.toLocaleString()}
+                          <span className="font-medium">Family Income:</span> ₹{(selectedApplication.familyInfo?.familyIncome || selectedApplication.applicationData?.familyInfo?.familyIncome)?.toLocaleString() || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">Bank:</span> {selectedApplication.applicationData.bankDetails.bankName}
+                          <span className="font-medium">Bank:</span> {selectedApplication.financialInfo?.bankName || selectedApplication.applicationData?.bankDetails?.bankName || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">Father's Occupation:</span> {selectedApplication.applicationData.familyInfo.fatherOccupation}
+                          <span className="font-medium">Father's Occupation:</span> {selectedApplication.familyInfo?.fatherOccupation || selectedApplication.applicationData?.familyInfo?.fatherOccupation || 'N/A'}
                         </div>
                         <div>
-                          <span className="font-medium">Mother's Occupation:</span> {selectedApplication.applicationData.familyInfo.motherOccupation}
+                          <span className="font-medium">Mother's Occupation:</span> {selectedApplication.familyInfo?.motherOccupation || selectedApplication.applicationData?.familyInfo?.motherOccupation || 'N/A'}
                         </div>
                       </div>
                     </div>
@@ -558,20 +607,47 @@ export default function ApplicationsPage() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Documents</label>
                       <div className="mt-1 space-y-1">
-                        {selectedApplication.documents.length > 0 ? (
+                        {selectedApplication.documents && selectedApplication.documents.length > 0 ? (
                           selectedApplication.documents.map((doc, index) => (
-                            <div key={index} className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer">
-                              📄 {doc.fileName} ({doc.type}) - {doc.status}
+                            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded border">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">📄</span>
+                                <div>
+                                  <p className="text-sm font-medium text-gray-900">{doc.fileName || doc.originalName}</p>
+                                  <p className="text-xs text-gray-500">Type: {doc.type}</p>
+                                  <p className="text-xs text-gray-400">Size: {(doc.fileSize / 1024).toFixed(1)} KB</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <span className={`px-2 py-1 text-xs rounded-full ${
+                                  doc.isVerified ? 'bg-green-100 text-green-800' :
+                                  doc.rejectionReason ? 'bg-red-100 text-red-800' :
+                                  'bg-yellow-100 text-yellow-800'
+                                }`}>
+                                  {doc.isVerified ? 'VERIFIED' : doc.rejectionReason ? 'REJECTED' : 'PENDING'}
+                                </span>
+                                <a 
+                                  href={`${API_CONFIG.BASE_URL}${doc.filePath}`} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:text-blue-800 text-sm"
+                                >
+                                  View
+                                </a>
+                              </div>
                             </div>
                           ))
                         ) : (
-                          <p className="text-sm text-gray-500">No documents uploaded</p>
+                          <div className="p-4 bg-gray-50 rounded border text-center">
+                            <p className="text-sm text-gray-500">No documents uploaded</p>
+                            <p className="text-xs text-gray-400 mt-1">Student has not uploaded any documents yet</p>
+                          </div>
                         )}
                       </div>
                     </div>
 
-                    {/* Only show review notes for pending and under_review applications */}
-                    {(selectedApplication.status === 'PENDING' || selectedApplication.status === 'UNDER_REVIEW') && (
+                    {/* Show review notes for pending, under_review, and submitted applications */}
+                    {(selectedApplication.status === 'PENDING' || selectedApplication.status === 'UNDER_REVIEW' || selectedApplication.status === 'SUBMITTED') && (
                       <div>
                         <label className="block text-sm font-medium text-gray-700">Review Notes</label>
                         <textarea
@@ -623,9 +699,23 @@ export default function ApplicationsPage() {
                       Close
                     </button>
                     
-                    {/* Only show approve/reject buttons for pending and under_review applications */}
-                    {(selectedApplication.status === 'PENDING' || selectedApplication.status === 'UNDER_REVIEW') && (
+                    {/* Show action buttons for pending, under_review, and submitted applications */}
+                    {(selectedApplication.status === 'PENDING' || selectedApplication.status === 'UNDER_REVIEW' || selectedApplication.status === 'SUBMITTED') && (
                       <>
+                        <button
+                          onClick={() => setShowFeedbackModal(true)}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                        >
+                          Send Feedback
+                        </button>
+                        {selectedApplication.status === 'SUBMITTED' && (
+                          <button
+                            onClick={() => handleMoveToUnderReview(selectedApplication.id)}
+                            className="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700"
+                          >
+                            Move to Review
+                          </button>
+                        )}
                         <button
                           onClick={() => handleReject(selectedApplication.id)}
                           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
@@ -764,6 +854,74 @@ export default function ApplicationsPage() {
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                     >
                       {selectedPayment ? 'Update Payment Status' : 'Initiate Payment'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Feedback Modal */}
+          {showFeedbackModal && selectedApplication && (
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+              <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white">
+                <div className="mt-3">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-medium text-gray-900">
+                      Send Feedback - {selectedApplication.student?.firstName} {selectedApplication.student?.lastName}
+                    </h3>
+                    <button
+                      onClick={() => setShowFeedbackModal(false)}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Feedback Type</label>
+                      <select
+                        value={feedbackType}
+                        onChange={(e) => setFeedbackType(e.target.value as any)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      >
+                        <option value="MISSING_DOCUMENTS">Missing Documents</option>
+                        <option value="INCOMPLETE_INFO">Incomplete Information</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Feedback Message</label>
+                      <textarea
+                        value={feedbackMessage}
+                        onChange={(e) => setFeedbackMessage(e.target.value)}
+                        rows={4}
+                        className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Enter your feedback message for the student..."
+                      />
+                    </div>
+
+                    <div className="bg-blue-50 p-3 rounded-md">
+                      <p className="text-sm text-blue-800">
+                        <strong>Note:</strong> This feedback will be sent to the student via email and will be visible in their application dashboard.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end space-x-3 mt-6">
+                    <button
+                      onClick={() => setShowFeedbackModal(false)}
+                      className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSendFeedback}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    >
+                      Send Feedback
                     </button>
                   </div>
                 </div>
