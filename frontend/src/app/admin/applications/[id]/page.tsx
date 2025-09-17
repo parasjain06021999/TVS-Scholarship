@@ -25,7 +25,7 @@ export default function ApplicationDetailPage() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`https://tvs-scholarship-a1fi.vercel.app/applications?id=${encodeURIComponent(String(id))}`, {
+      const res = await fetch(`https://tvs-scholarship.onrender.com/applications?id=${encodeURIComponent(String(id))}`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       if (res.ok) {
@@ -48,7 +48,7 @@ export default function ApplicationDetailPage() {
         if (!app || !app.id) {
           console.log('App not found, trying direct endpoint...');
           // Fallback to direct by-id endpoint
-          const res2 = await fetch(`https://tvs-scholarship-a1fi.vercel.app/applications/${id}`, {
+          const res2 = await fetch(`https://tvs-scholarship.onrender.com/applications/${id}`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           if (res2.ok) {
@@ -61,7 +61,7 @@ export default function ApplicationDetailPage() {
         setData(app);
       } else {
         // Fallback direct by-id endpoint
-        const res2 = await fetch(`https://tvs-scholarship-a1fi.vercel.app/applications/${id}`, {
+        const res2 = await fetch(`https://tvs-scholarship.onrender.com/applications/${id}`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
         if (res2.ok) {

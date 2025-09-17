@@ -56,7 +56,7 @@ export class UploadController {
         size: file.size,
         mimetype: file.mimetype,
         path: `/uploads/documents/${file.filename}`,
-        url: `https://tvs-scholarship-a1fi.vercel.app/uploads/documents/${file.filename}`
+        url: `https://tvs-scholarship.onrender.com/uploads/documents/${file.filename}`
       }
     };
   }

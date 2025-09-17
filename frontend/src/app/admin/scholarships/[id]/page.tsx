@@ -41,7 +41,7 @@ export default function ScholarshipViewPage() {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch(`https://tvs-scholarship-a1fi.vercel.app/scholarships/${scholarshipId}`, {
+      const response = await fetch(`https://tvs-scholarship.onrender.com/scholarships/${scholarshipId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function ScholarshipViewPage() {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch(`https://tvs-scholarship-a1fi.vercel.app/scholarships/${scholarshipId}/toggle-status`, {
+      const response = await fetch(`https://tvs-scholarship.onrender.com/scholarships/${scholarshipId}/toggle-status`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,

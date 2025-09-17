@@ -77,19 +77,19 @@ export default function DashboardPage() {
       };
 
       const [profileResponse, applicationsResponse, notificationsResponse] = await Promise.allSettled([
-        fetch('https://tvs-scholarship-a1fi.vercel.app/auth/profile', { 
+        fetch('https://tvs-scholarship.onrender.com/auth/profile', { 
           method: 'GET',
           headers,
           credentials: 'include',
           mode: 'cors'
         }),
-        fetch('https://tvs-scholarship-a1fi.vercel.app/applications', { 
+        fetch('https://tvs-scholarship.onrender.com/applications', { 
           method: 'GET',
           headers,
           credentials: 'include',
           mode: 'cors'
         }),
-        fetch('https://tvs-scholarship-a1fi.vercel.app/notifications', { 
+        fetch('https://tvs-scholarship.onrender.com/notifications', { 
           method: 'GET',
           headers,
           credentials: 'include',

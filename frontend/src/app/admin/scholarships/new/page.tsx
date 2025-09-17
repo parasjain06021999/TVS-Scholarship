@@ -72,7 +72,7 @@ export default function CreateScholarshipPage() {
         throw new Error('Admin or Super Admin access required');
       }
 
-      const response = await fetch('https://tvs-scholarship-a1fi.vercel.app/scholarships', {
+      const response = await fetch('https://tvs-scholarship.onrender.com/scholarships', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
