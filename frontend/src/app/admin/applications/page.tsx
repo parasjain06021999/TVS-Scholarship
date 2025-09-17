@@ -279,7 +279,7 @@ export default function ApplicationsPage() {
 
     try {
       // Send feedback to student
-      const response = await fetch(`http://localhost:3001/applications/${selectedApplication.id}/feedback`, {
+      const response = await fetch(`https://tvs-scholarship.onrender.com/applications/${selectedApplication.id}/feedback`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
