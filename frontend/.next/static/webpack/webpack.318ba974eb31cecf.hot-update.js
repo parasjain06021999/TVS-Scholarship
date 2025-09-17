@@ -1,4 +1,3 @@
-git remote set-url origin https://github.com/parasjain06021999/TVS-Scholarship.git
 "use strict";
 /*
  * ATTENTION: An "eval-source-map" devtool has been used.
