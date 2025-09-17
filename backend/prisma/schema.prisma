@@ -1,0 +1,723 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      UserRole @default(STUDENT)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  student           Student?
+  adminProfile      AdminProfile?
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+  mobileDevices     MobileDevice[]
+  pushNotifications PushNotification[]
+  consentRecords    ConsentRecord[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  REVIEWER
+  SUPER_ADMIN
+  FINANCE_OFFICER
+}
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  PUSH
+  ANNOUNCEMENT
+  IN_APP
+}
+
+enum CommunicationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum CommunicationStatus {
+  PENDING
+  SENT
+  FAILED
+  CANCELLED
+  SCHEDULED
+}
+
+enum WorkflowStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum TaskType {
+  REVIEW
+  VERIFICATION
+  APPROVAL
+  NOTIFICATION
+  PAYMENT
+  DOCUMENT_REQUEST
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum IntegrationType {
+  PAYMENT_GATEWAY
+  EMAIL_SERVICE
+  SMS_SERVICE
+  DOCUMENT_VERIFICATION
+  BANKING_API
+  ANALYTICS
+}
+
+enum TestType {
+  UNIT
+  INTEGRATION
+  E2E
+  PERFORMANCE
+  SECURITY
+  ACCESSIBILITY
+}
+
+enum TestStatus {
+  PENDING
+  RUNNING
+  PASSED
+  FAILED
+  SKIPPED
+}
+
+enum TestResult {
+  PASS
+  FAIL
+  SKIP
+  ERROR
+}
+
+enum MigrationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  ROLLED_BACK
+}
+
+enum ConsentStatus {
+  ACTIVE
+  WITHDRAWN
+  EXPIRED
+  PENDING
+}
+
+// Student Profile
+model Student {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  firstName         String
+  lastName          String
+  dateOfBirth       DateTime
+  gender            Gender
+  phone             String?
+  email             String?  // Added email field
+  address           String
+  city              String
+  state             String
+  pincode           String
+  country           String   @default("India")
+  aadharNumber      String?  @unique
+  panNumber         String?
+  fatherName        String
+  fatherOccupation  String?
+  motherName        String
+  motherOccupation  String?
+  familyIncome      Float?
+  emergencyContact  String?
+  profileImage      String?
+  isVerified        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications Application[]
+  documents    Document[]
+
+  @@map("students")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Scholarship Management
+model Scholarship {
+  id                String            @id @default(cuid())
+  title             String
+  description       String
+  eligibilityCriteria String
+  amount            Float
+  maxAmount         Float?
+  category          ScholarshipCategory
+  subCategory       String?
+  applicationStartDate DateTime
+  applicationEndDate   DateTime
+  academicYear      String
+  isActive          Boolean           @default(true)
+  maxApplications   Int?
+  currentApplications Int             @default(0)
+  requirements      Json?             // Flexible requirements JSON
+  documentsRequired String[]          // Array of required document types
+  priority          Int               @default(0)
+  createdBy         String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // Relations
+  applications Application[]
+
+  @@map("scholarships")
+}
+
+enum ScholarshipCategory {
+  MERIT_BASED
+  NEED_BASED
+  SPORTS
+  CULTURAL
+  TECHNICAL
+  RESEARCH
+  DISABILITY
+  MINORITY
+  WOMEN_EMPOWERMENT
+  OTHER
+}
+
+// Application Management
+model Application {
+  id              String            @id @default(cuid())
+  studentId       String
+  scholarshipId   String
+  status          ApplicationStatus @default(SUBMITTED)
+  applicationData Json              // Flexible application form data
+  academicInfo    Json?             // Academic information
+  familyInfo      Json?             // Family information
+  financialInfo   Json?             // Financial information
+  additionalInfo  Json?             // Additional information
+  reviewerNotes   String?
+  adminNotes      String?
+  score           Float?
+  rank            Int?
+  awardedAmount   Float?
+  rejectionReason String?
+  remarks         String?
+  submittedAt     DateTime?
+  reviewedAt      DateTime?
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Relations
+  student     Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  scholarship Scholarship @relation(fields: [scholarshipId], references: [id])
+  documents   Document[]
+  payments    Payment[]
+
+  @@unique([studentId, scholarshipId])
+  @@map("applications")
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  ON_HOLD
+  CANCELLED
+}
+
+// Document Management
+model Document {
+  id            String         @id @default(cuid())
+  studentId     String
+  applicationId String?
+  type          DocumentType
+  fileName      String
+  originalName  String
+  filePath      String
+  fileSize      Int
+  mimeType      String
+  isVerified    Boolean        @default(false)
+  verifiedBy    String?
+  verifiedAt    DateTime?
+  rejectionReason String?
+  uploadedAt    DateTime       @default(now())
+
+  // Relations
+  student     Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  application Application?      @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  versions    DocumentVersion[]
+
+  @@map("documents")
+}
+
+enum DocumentType {
+  PHOTOGRAPH
+  AADHAR_CARD
+  PAN_CARD
+  BIRTH_CERTIFICATE
+  MARK_SHEET_10TH
+  MARK_SHEET_12TH
+  DEGREE_CERTIFICATE
+  INCOME_CERTIFICATE
+  CASTE_CERTIFICATE
+  DISABILITY_CERTIFICATE
+  BANK_PASSBOOK
+  SIGNATURE
+  OTHER
+}
+
+// Payment Management
+model Payment {
+  id            String        @id @default(cuid())
+  applicationId String
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String?
+  transactionId String?
+  paymentDate   DateTime?
+  remarks       String?
+  bankName      String?
+  bankReference String?
+  upiReference  String?
+  accountNumber String?  // Added account number field
+  failureReason String?  // Added failure reason field
+  ifscCode      String?  // Added IFSC code field
+  processedAt   DateTime? // Added processed at field
+  accountHolderName String? // Added account holder name field
+  processedBy   String?  // Added processed by field
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+// Admin Profile
+model AdminProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  firstName String
+  lastName  String
+  phone     String?
+  department String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admin_profiles")
+}
+
+// Notification System
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  readAt    DateTime?        // Added readAt field
+  priority  String?          // HIGH, MEDIUM, LOW
+  data      Json?            // Additional notification data
+  createdAt DateTime         @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  APPLICATION_SUBMITTED
+  APPLICATION_APPROVED
+  APPLICATION_REJECTED
+  APPLICATION_UPDATE
+  DOCUMENT_VERIFIED
+  DOCUMENT_REJECTED
+  DOCUMENT_REQUEST
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  PAYMENT_UPDATE
+  SYSTEM_ANNOUNCEMENT
+  DEADLINE_REMINDER
+  REMINDER
+  ANNOUNCEMENT
+  OTHER
+}
+
+// Audit Logging
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  oldValues Json?
+  newValues Json?
+  ipAddress String?
+  userAgent String?
+  sessionId String?  // Added session ID field
+  riskLevel String?
+  outcome   String?  // Added outcome field
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
+
+// System Configuration
+model SystemConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  type      String   @default("string") // string, number, boolean, json
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("system_config")
+}
+
+// Communication System
+model Communication {
+  id            String   @id @default(cuid())
+  title         String
+  content       String
+  type          CommunicationType
+  priority      CommunicationPriority
+  targetAudience Json
+  scheduledAt   DateTime?
+  templateId    String?
+  metadata      Json?
+  status        CommunicationStatus @default(PENDING)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("communications")
+}
+
+model Announcement {
+  id            String   @id @default(cuid())
+  title         String
+  content       String
+  priority      CommunicationPriority
+  targetAudience Json
+  metadata      Json?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("announcements")
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  subject   String
+  content   String
+  variables String[]
+  category  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("email_templates")
+}
+
+// Workflow Management
+model Workflow {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  steps       Json
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instances WorkflowInstance[]
+
+  @@map("workflows")
+}
+
+model WorkflowInstance {
+  id         String   @id @default(cuid())
+  workflowId String
+  entityType String
+  entityId   String
+  currentStep String
+  status     WorkflowStatus @default(PENDING)
+  data       Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  workflow Workflow @relation(fields: [workflowId], references: [id])
+
+  @@map("workflow_instances")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  type        TaskType
+  priority    TaskPriority @default(MEDIUM)
+  status      TaskStatus @default(PENDING)
+  assignedTo  String?
+  dueDate     DateTime?
+  entityType  String?
+  entityId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tasks")
+}
+
+// Document Management
+model DocumentVersion {
+  id          String   @id @default(cuid())
+  documentId  String
+  version     Int
+  fileName    String
+  filePath    String
+  fileSize    Int
+  mimeType    String
+  uploadedBy  String
+  uploadedAt  DateTime @default(now())
+  changes     String?
+  isActive    Boolean  @default(true)
+
+  document Document @relation(fields: [documentId], references: [id])
+
+  @@map("document_versions")
+}
+
+model DocumentTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  category    String
+  template    Json
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("document_templates")
+}
+
+// Mobile App Support
+model MobileDevice {
+  id        String   @id @default(cuid())
+  userId    String
+  deviceId  String
+  platform  String
+  version   String
+  fcmToken  String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, deviceId])
+  @@map("mobile_devices")
+}
+
+model PushNotification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  data      Json?
+  sent      Boolean  @default(false)
+  sentAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("push_notifications")
+}
+
+// Integration Management
+model Integration {
+  id          String   @id @default(cuid())
+  name        String
+  type        IntegrationType
+  config      Json
+  isActive    Boolean  @default(true)
+  lastSync    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("integrations")
+}
+
+model Webhook {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  events      String[]
+  secret      String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  logs WebhookLog[]
+
+  @@map("webhooks")
+}
+
+model WebhookLog {
+  id         String   @id @default(cuid())
+  webhookId  String
+  event      String
+  payload    Json
+  response   Json?
+  status     Int?
+  createdAt  DateTime @default(now())
+
+  webhook Webhook @relation(fields: [webhookId], references: [id])
+
+  @@map("webhook_logs")
+}
+
+// Testing & Quality Assurance
+model TestCase {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        TestType
+  status      TestStatus @default(PENDING)
+  steps       Json
+  expected    Json
+  actual      Json?
+  result      TestResult?
+  executedBy  String?
+  executedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("test_cases")
+}
+
+model TestSuite {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  testCases   String[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("test_suites")
+}
+
+// Performance Monitoring
+model PerformanceMetric {
+  id        String   @id @default(cuid())
+  name      String
+  value     Float
+  unit      String
+  category  String
+  timestamp DateTime @default(now())
+  metadata  Json?
+
+  @@map("performance_metrics")
+}
+
+// Data Migration
+model MigrationLog {
+  id          String   @id @default(cuid())
+  name        String
+  status      MigrationStatus
+  startedAt   DateTime
+  completedAt DateTime?
+  recordsProcessed Int @default(0)
+  recordsTotal     Int @default(0)
+  error       String?
+  metadata    Json?
+
+  @@map("migration_logs")
+}
+
+// Consent Management (GDPR)
+model ConsentRecord {
+  id              String   @id @default(cuid())
+  userId          String
+  dataTypes       String[]
+  purpose         String
+  grantedAt       DateTime @default(now())
+  withdrawnAt     DateTime?
+  ipAddress       String
+  userAgent       String
+  consentVersion  String
+  status          ConsentStatus @default(ACTIVE)
+  withdrawalReason String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("consent_records")
+}
