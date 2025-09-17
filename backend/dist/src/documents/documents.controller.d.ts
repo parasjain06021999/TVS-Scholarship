@@ -7,57 +7,57 @@ export declare class DocumentsController {
         message: string;
         data: {
             id: string;
+            isVerified: boolean;
+            studentId: string;
+            rejectionReason: string | null;
+            uploadedAt: Date;
+            applicationId: string | null;
             type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
             fileSize: number;
             mimeType: string;
-            isVerified: boolean;
             verifiedBy: string | null;
             verifiedAt: Date | null;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            studentId: string;
-            applicationId: string | null;
         };
     }>;
     getUserDocuments(req: any): Promise<{
         success: boolean;
         data: {
             id: string;
+            isVerified: boolean;
+            studentId: string;
+            rejectionReason: string | null;
+            uploadedAt: Date;
+            applicationId: string | null;
             type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
             fileSize: number;
             mimeType: string;
-            isVerified: boolean;
             verifiedBy: string | null;
             verifiedAt: Date | null;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            studentId: string;
-            applicationId: string | null;
         }[];
     }>;
     getDocument(id: string, req: any): Promise<{
         success: boolean;
         data: {
             id: string;
+            isVerified: boolean;
+            studentId: string;
+            rejectionReason: string | null;
+            uploadedAt: Date;
+            applicationId: string | null;
             type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
             fileSize: number;
             mimeType: string;
-            isVerified: boolean;
             verifiedBy: string | null;
             verifiedAt: Date | null;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            studentId: string;
-            applicationId: string | null;
         };
     }>;
     verifyDocument(id: string, body: {
@@ -68,19 +68,19 @@ export declare class DocumentsController {
         message: string;
         data: {
             id: string;
+            isVerified: boolean;
+            studentId: string;
+            rejectionReason: string | null;
+            uploadedAt: Date;
+            applicationId: string | null;
             type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
             fileSize: number;
             mimeType: string;
-            isVerified: boolean;
             verifiedBy: string | null;
             verifiedAt: Date | null;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            studentId: string;
-            applicationId: string | null;
         };
     }>;
     deleteDocument(id: string, req: any): Promise<{

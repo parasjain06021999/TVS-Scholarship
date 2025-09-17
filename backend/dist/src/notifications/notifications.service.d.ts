@@ -22,16 +22,16 @@ export declare class NotificationsService {
     private sendSMSNotification;
     getUserNotifications(userId: string, page?: number, limit?: number, unreadOnly?: boolean): Promise<{
         notifications: {
+            data: import("@prisma/client/runtime/library").JsonValue | null;
             id: string;
+            createdAt: Date;
             userId: string;
             title: string;
-            message: string;
+            priority: string | null;
             type: import(".prisma/client").$Enums.NotificationType;
+            message: string;
             isRead: boolean;
             readAt: Date | null;
-            priority: string | null;
-            data: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
         }[];
         pagination: {
             page: number;

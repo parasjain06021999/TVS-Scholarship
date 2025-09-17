@@ -219,6 +219,16 @@ export declare class ApplicationsController {
             processedAt: Date | null;
             processedBy: string | null;
         }[];
+        feedback: {
+            id: string;
+            createdAt: Date;
+            type: import(".prisma/client").$Enums.FeedbackType;
+            message: string;
+            sender: {
+                id: string;
+                email: string;
+            };
+        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ApplicationStatus;
@@ -325,5 +335,23 @@ export declare class ApplicationsController {
         totalAmountDisbursed: number;
         totalStudents: number;
         totalScholarships: number;
+    }>;
+    sendFeedback(id: string, body: {
+        type: 'GENERAL' | 'DOCUMENT_REQUEST' | 'INFORMATION_REQUEST' | 'CLARIFICATION';
+        message: string;
+    }, req: any): Promise<{
+        success: boolean;
+        message: string;
+        data: {
+            applicationId: string;
+            type: "GENERAL" | "INFORMATION_REQUEST" | "CLARIFICATION" | "DOCUMENT_REQUEST";
+            message: string;
+            sentBy: any;
+            sentAt: string;
+        };
+    } | {
+        success: boolean;
+        message: any;
+        data?: undefined;
     }>;
 }

@@ -7,51 +7,51 @@ export declare class CommunicationsController {
         message: string;
         data: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             title: string;
-            content: string;
-            type: import(".prisma/client").$Enums.CommunicationType;
             priority: import(".prisma/client").$Enums.CommunicationPriority;
+            status: import(".prisma/client").$Enums.CommunicationStatus;
+            type: import(".prisma/client").$Enums.CommunicationType;
+            content: string;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             targetAudience: import("@prisma/client/runtime/library").JsonValue;
             scheduledAt: Date | null;
             templateId: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            status: import(".prisma/client").$Enums.CommunicationStatus;
-            createdAt: Date;
-            updatedAt: Date;
         };
     }>;
     getCampaigns(query: any, req: any): Promise<{
         success: boolean;
         data: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             title: string;
-            content: string;
-            type: import(".prisma/client").$Enums.CommunicationType;
             priority: import(".prisma/client").$Enums.CommunicationPriority;
+            status: import(".prisma/client").$Enums.CommunicationStatus;
+            type: import(".prisma/client").$Enums.CommunicationType;
+            content: string;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             targetAudience: import("@prisma/client/runtime/library").JsonValue;
             scheduledAt: Date | null;
             templateId: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            status: import(".prisma/client").$Enums.CommunicationStatus;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
     }>;
     getCampaign(id: string, req: any): Promise<{
         success: boolean;
         data: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             title: string;
-            content: string;
-            type: import(".prisma/client").$Enums.CommunicationType;
             priority: import(".prisma/client").$Enums.CommunicationPriority;
+            status: import(".prisma/client").$Enums.CommunicationStatus;
+            type: import(".prisma/client").$Enums.CommunicationType;
+            content: string;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             targetAudience: import("@prisma/client/runtime/library").JsonValue;
             scheduledAt: Date | null;
             templateId: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            status: import(".prisma/client").$Enums.CommunicationStatus;
-            createdAt: Date;
-            updatedAt: Date;
         };
     }>;
     sendCampaign(id: string, req: any): Promise<{

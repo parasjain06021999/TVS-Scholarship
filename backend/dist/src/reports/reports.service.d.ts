@@ -23,20 +23,19 @@ export declare class ReportsService {
             monthlyData: {};
             applications: ({
                 student: {
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    userId: string;
+                    email: string | null;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
                     gender: import(".prisma/client").$Enums.Gender;
                     phone: string | null;
-                    email: string | null;
                     address: string;
                     city: string;
                     state: string;
                     pincode: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -48,9 +47,11 @@ export declare class ReportsService {
                     emergencyContact: string | null;
                     profileImage: string | null;
                     isVerified: boolean;
+                    userId: string;
                 };
                 scholarship: {
                     id: string;
+                    isActive: boolean;
                     createdAt: Date;
                     updatedAt: Date;
                     title: string;
@@ -63,7 +64,6 @@ export declare class ReportsService {
                     applicationStartDate: Date;
                     applicationEndDate: Date;
                     academicYear: string;
-                    isActive: boolean;
                     maxApplications: number | null;
                     currentApplications: number;
                     requirements: import("@prisma/client/runtime/library").JsonValue | null;
@@ -73,6 +73,10 @@ export declare class ReportsService {
                 };
             } & {
                 id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                studentId: string;
+                scholarshipId: string;
                 status: import(".prisma/client").$Enums.ApplicationStatus;
                 applicationData: import("@prisma/client/runtime/library").JsonValue;
                 academicInfo: import("@prisma/client/runtime/library").JsonValue | null;
@@ -90,10 +94,6 @@ export declare class ReportsService {
                 reviewedAt: Date | null;
                 approvedAt: Date | null;
                 rejectedAt: Date | null;
-                createdAt: Date;
-                updatedAt: Date;
-                studentId: string;
-                scholarshipId: string;
             })[];
         };
     }>;
@@ -119,20 +119,19 @@ export declare class ReportsService {
             payments: ({
                 application: {
                     student: {
-                        id: string;
-                        createdAt: Date;
-                        updatedAt: Date;
-                        userId: string;
+                        email: string | null;
                         firstName: string;
                         lastName: string;
                         dateOfBirth: Date;
                         gender: import(".prisma/client").$Enums.Gender;
                         phone: string | null;
-                        email: string | null;
                         address: string;
                         city: string;
                         state: string;
                         pincode: string;
+                        id: string;
+                        createdAt: Date;
+                        updatedAt: Date;
                         country: string;
                         aadharNumber: string | null;
                         panNumber: string | null;
@@ -144,9 +143,11 @@ export declare class ReportsService {
                         emergencyContact: string | null;
                         profileImage: string | null;
                         isVerified: boolean;
+                        userId: string;
                     };
                     scholarship: {
                         id: string;
+                        isActive: boolean;
                         createdAt: Date;
                         updatedAt: Date;
                         title: string;
@@ -159,7 +160,6 @@ export declare class ReportsService {
                         applicationStartDate: Date;
                         applicationEndDate: Date;
                         academicYear: string;
-                        isActive: boolean;
                         maxApplications: number | null;
                         currentApplications: number;
                         requirements: import("@prisma/client/runtime/library").JsonValue | null;
@@ -169,6 +169,10 @@ export declare class ReportsService {
                     };
                 } & {
                     id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    studentId: string;
+                    scholarshipId: string;
                     status: import(".prisma/client").$Enums.ApplicationStatus;
                     applicationData: import("@prisma/client/runtime/library").JsonValue;
                     academicInfo: import("@prisma/client/runtime/library").JsonValue | null;
@@ -186,18 +190,14 @@ export declare class ReportsService {
                     reviewedAt: Date | null;
                     approvedAt: Date | null;
                     rejectedAt: Date | null;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    studentId: string;
-                    scholarshipId: string;
                 };
             } & {
                 id: string;
-                status: import(".prisma/client").$Enums.PaymentStatus;
-                remarks: string | null;
                 createdAt: Date;
                 updatedAt: Date;
                 amount: number;
+                status: import(".prisma/client").$Enums.PaymentStatus;
+                remarks: string | null;
                 applicationId: string;
                 paymentMethod: string | null;
                 transactionId: string | null;

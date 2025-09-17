@@ -6,14 +6,14 @@ export declare class ComplianceController {
         success: boolean;
         data: {
             id: string;
-            status: import(".prisma/client").$Enums.ConsentStatus;
             userId: string;
+            status: import(".prisma/client").$Enums.ConsentStatus;
+            ipAddress: string;
+            userAgent: string;
             dataTypes: string[];
             purpose: string;
             grantedAt: Date;
             withdrawnAt: Date | null;
-            ipAddress: string;
-            userAgent: string;
             consentVersion: string;
             withdrawalReason: string | null;
         } | {
@@ -29,14 +29,14 @@ export declare class ComplianceController {
         message: string;
         data: {
             id: string;
-            status: import(".prisma/client").$Enums.ConsentStatus;
             userId: string;
+            status: import(".prisma/client").$Enums.ConsentStatus;
+            ipAddress: string;
+            userAgent: string;
             dataTypes: string[];
             purpose: string;
             grantedAt: Date;
             withdrawnAt: Date | null;
-            ipAddress: string;
-            userAgent: string;
             consentVersion: string;
             withdrawalReason: string | null;
         };
@@ -70,21 +70,21 @@ export declare class ComplianceController {
         success: boolean;
         data: ({
             user: {
-                id: string;
                 email: string;
+                id: string;
                 role: import(".prisma/client").$Enums.UserRole;
             };
         } & {
             id: string;
             createdAt: Date;
             userId: string | null;
-            ipAddress: string | null;
-            userAgent: string | null;
             action: string;
             entity: string;
             entityId: string | null;
             oldValues: import("@prisma/client/runtime/library").JsonValue | null;
             newValues: import("@prisma/client/runtime/library").JsonValue | null;
+            ipAddress: string | null;
+            userAgent: string | null;
             sessionId: string | null;
             riskLevel: string | null;
             outcome: string | null;
@@ -95,14 +95,14 @@ export declare class ComplianceController {
         message: string;
         data: {
             id: string;
-            status: import(".prisma/client").$Enums.ConsentStatus;
             userId: string;
+            status: import(".prisma/client").$Enums.ConsentStatus;
+            ipAddress: string;
+            userAgent: string;
             dataTypes: string[];
             purpose: string;
             grantedAt: Date;
             withdrawnAt: Date | null;
-            ipAddress: string;
-            userAgent: string;
             consentVersion: string;
             withdrawalReason: string | null;
         };

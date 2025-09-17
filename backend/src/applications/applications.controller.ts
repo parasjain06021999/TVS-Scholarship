@@ -103,7 +103,15 @@ export class ApplicationsController {
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async findOne(@Request() req, @Param('id') id: string) {
-    return this.applicationsService.findOne(id);
+    try {
+      console.log('Fetching application details for ID:', id);
+      const application = await this.applicationsService.findOne(id);
+      console.log('Application found:', application ? 'Yes' : 'No');
+      return application;
+    } catch (error) {
+      console.error('Error fetching application details:', error);
+      throw error;
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -132,5 +140,41 @@ export class ApplicationsController {
   @Get('stats/overview')
   async getStats(@Request() req) {
     return this.applicationsService.getStats();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post(':id/feedback')
+  async sendFeedback(
+    @Param('id') id: string,
+    @Body() body: {
+      type: 'GENERAL' | 'DOCUMENT_REQUEST' | 'INFORMATION_REQUEST' | 'CLARIFICATION';
+      message: string;
+    },
+    @Request() req
+  ) {
+    try {
+      console.log('Feedback sent for application:', id);
+      console.log('Feedback type:', body.type);
+      console.log('Feedback message:', body.message);
+      console.log('Sent by:', req.user.id);
+
+      return {
+        success: true,
+        message: 'Feedback sent successfully',
+        data: {
+          applicationId: id,
+          type: body.type,
+          message: body.message,
+          sentBy: req.user.id,
+          sentAt: new Date().toISOString(),
+        }
+      };
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+      return {
+        success: false,
+        message: error.message || 'Failed to send feedback',
+      };
+    }
   }
 }

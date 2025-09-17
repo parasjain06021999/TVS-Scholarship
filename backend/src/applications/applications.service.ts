@@ -403,42 +403,73 @@ export class ApplicationsService {
   }
 
   async findOne(id: string) {
-    const application = await this.prisma.application.findUnique({
-      where: { id },
-      include: {
-        student: true,
-        scholarship: true,
-        documents: {
-          select: {
-            id: true,
-            type: true,
-            fileName: true,
-            originalName: true,
-            filePath: true,
-            fileSize: true,
-            mimeType: true,
-            isVerified: true,
-            verifiedBy: true,
-            verifiedAt: true,
-            rejectionReason: true,
-            uploadedAt: true,
-          }
+    try {
+      console.log('Finding application with ID:', id);
+      
+      const application = await this.prisma.application.findUnique({
+        where: { id },
+        include: {
+          student: true,
+          scholarship: true,
+          documents: {
+            select: {
+              id: true,
+              type: true,
+              fileName: true,
+              originalName: true,
+              filePath: true,
+              fileSize: true,
+              mimeType: true,
+              isVerified: true,
+              verifiedBy: true,
+              verifiedAt: true,
+              rejectionReason: true,
+              uploadedAt: true,
+            }
+          },
+          payments: true,
+          feedback: {
+            select: {
+              id: true,
+              type: true,
+              message: true,
+              createdAt: true,
+              sender: {
+                select: {
+                  id: true,
+                  email: true,
+                }
+              }
+            },
+            orderBy: { createdAt: 'desc' }
+          },
         },
-        payments: true,
-      },
-    });
+      });
 
-    if (!application) {
-      throw new NotFoundException('Application not found');
+      if (!application) {
+        console.log('Application not found for ID:', id);
+        throw new NotFoundException('Application not found');
+      }
+
+      console.log('Application found successfully:', {
+        id: application.id,
+        documentsCount: application.documents?.length || 0,
+        feedbackCount: application.feedback?.length || 0
+      });
+
+      // Debug application data structure
+      console.log('Application Data Structure:', {
+        applicationData: application.applicationData,
+        academicInfo: application.academicInfo,
+        familyInfo: application.familyInfo,
+        financialInfo: application.financialInfo
+      });
+
+      return application;
+    } catch (error) {
+      console.error('Error in findOne method:', error);
+      throw error;
     }
-
-    console.log('Application found:', {
-      id: application.id,
-      documentsCount: application.documents?.length || 0,
-      documents: application.documents
-    });
-
-    return application;
   }
 
   async update(id: string, updateApplicationDto: UpdateApplicationDto) {

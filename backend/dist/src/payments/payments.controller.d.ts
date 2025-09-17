@@ -8,11 +8,7 @@ export declare class PaymentsController {
         data: {
             application: {
                 student: {
-                    id: string;
                     email: string | null;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    userId: string;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
@@ -22,6 +18,9 @@ export declare class PaymentsController {
                     city: string;
                     state: string;
                     pincode: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -33,8 +32,13 @@ export declare class PaymentsController {
                     emergencyContact: string | null;
                     profileImage: string | null;
                     isVerified: boolean;
+                    userId: string;
                 };
                 scholarship: {
+                    id: string;
+                    isActive: boolean;
+                    createdAt: Date;
+                    updatedAt: Date;
                     title: string;
                     description: string;
                     eligibilityCriteria: string;
@@ -45,15 +49,11 @@ export declare class PaymentsController {
                     applicationStartDate: Date;
                     applicationEndDate: Date;
                     academicYear: string;
-                    isActive: boolean;
                     maxApplications: number | null;
                     currentApplications: number;
+                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     documentsRequired: string[];
                     priority: number;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     createdBy: string;
                 };
             } & {
@@ -81,24 +81,24 @@ export declare class PaymentsController {
                 rejectedAt: Date | null;
             };
         } & {
-            amount: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            amount: number;
             status: import(".prisma/client").$Enums.PaymentStatus;
             remarks: string | null;
             applicationId: string;
-            bankName: string | null;
-            accountNumber: string | null;
-            ifscCode: string | null;
-            accountHolderName: string | null;
             paymentMethod: string | null;
             transactionId: string | null;
             paymentDate: Date | null;
+            bankName: string | null;
             bankReference: string | null;
             upiReference: string | null;
+            accountNumber: string | null;
             failureReason: string | null;
+            ifscCode: string | null;
             processedAt: Date | null;
+            accountHolderName: string | null;
             processedBy: string | null;
         };
     }>;
@@ -106,24 +106,24 @@ export declare class PaymentsController {
         success: boolean;
         message: string;
         data: {
-            amount: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            amount: number;
             status: import(".prisma/client").$Enums.PaymentStatus;
             remarks: string | null;
             applicationId: string;
-            bankName: string | null;
-            accountNumber: string | null;
-            ifscCode: string | null;
-            accountHolderName: string | null;
             paymentMethod: string | null;
             transactionId: string | null;
             paymentDate: Date | null;
+            bankName: string | null;
             bankReference: string | null;
             upiReference: string | null;
+            accountNumber: string | null;
             failureReason: string | null;
+            ifscCode: string | null;
             processedAt: Date | null;
+            accountHolderName: string | null;
             processedBy: string | null;
         };
     }>;
@@ -132,11 +132,7 @@ export declare class PaymentsController {
         data: ({
             application: {
                 student: {
-                    id: string;
                     email: string | null;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    userId: string;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
@@ -146,6 +142,9 @@ export declare class PaymentsController {
                     city: string;
                     state: string;
                     pincode: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -157,8 +156,13 @@ export declare class PaymentsController {
                     emergencyContact: string | null;
                     profileImage: string | null;
                     isVerified: boolean;
+                    userId: string;
                 };
                 scholarship: {
+                    id: string;
+                    isActive: boolean;
+                    createdAt: Date;
+                    updatedAt: Date;
                     title: string;
                     description: string;
                     eligibilityCriteria: string;
@@ -169,15 +173,11 @@ export declare class PaymentsController {
                     applicationStartDate: Date;
                     applicationEndDate: Date;
                     academicYear: string;
-                    isActive: boolean;
                     maxApplications: number | null;
                     currentApplications: number;
+                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     documentsRequired: string[];
                     priority: number;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     createdBy: string;
                 };
             } & {
@@ -205,24 +205,24 @@ export declare class PaymentsController {
                 rejectedAt: Date | null;
             };
         } & {
-            amount: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            amount: number;
             status: import(".prisma/client").$Enums.PaymentStatus;
             remarks: string | null;
             applicationId: string;
-            bankName: string | null;
-            accountNumber: string | null;
-            ifscCode: string | null;
-            accountHolderName: string | null;
             paymentMethod: string | null;
             transactionId: string | null;
             paymentDate: Date | null;
+            bankName: string | null;
             bankReference: string | null;
             upiReference: string | null;
+            accountNumber: string | null;
             failureReason: string | null;
+            ifscCode: string | null;
             processedAt: Date | null;
+            accountHolderName: string | null;
             processedBy: string | null;
         })[];
     }>;
@@ -231,11 +231,7 @@ export declare class PaymentsController {
         data: {
             application: {
                 student: {
-                    id: string;
                     email: string | null;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    userId: string;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
@@ -245,6 +241,9 @@ export declare class PaymentsController {
                     city: string;
                     state: string;
                     pincode: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -256,8 +255,13 @@ export declare class PaymentsController {
                     emergencyContact: string | null;
                     profileImage: string | null;
                     isVerified: boolean;
+                    userId: string;
                 };
                 scholarship: {
+                    id: string;
+                    isActive: boolean;
+                    createdAt: Date;
+                    updatedAt: Date;
                     title: string;
                     description: string;
                     eligibilityCriteria: string;
@@ -268,15 +272,11 @@ export declare class PaymentsController {
                     applicationStartDate: Date;
                     applicationEndDate: Date;
                     academicYear: string;
-                    isActive: boolean;
                     maxApplications: number | null;
                     currentApplications: number;
+                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     documentsRequired: string[];
                     priority: number;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    requirements: import("@prisma/client/runtime/library").JsonValue | null;
                     createdBy: string;
                 };
             } & {
@@ -304,24 +304,24 @@ export declare class PaymentsController {
                 rejectedAt: Date | null;
             };
         } & {
-            amount: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            amount: number;
             status: import(".prisma/client").$Enums.PaymentStatus;
             remarks: string | null;
             applicationId: string;
-            bankName: string | null;
-            accountNumber: string | null;
-            ifscCode: string | null;
-            accountHolderName: string | null;
             paymentMethod: string | null;
             transactionId: string | null;
             paymentDate: Date | null;
+            bankName: string | null;
             bankReference: string | null;
             upiReference: string | null;
+            accountNumber: string | null;
             failureReason: string | null;
+            ifscCode: string | null;
             processedAt: Date | null;
+            accountHolderName: string | null;
             processedBy: string | null;
         };
     }>;
@@ -332,24 +332,24 @@ export declare class PaymentsController {
         success: boolean;
         message: string;
         data: {
-            amount: number;
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            amount: number;
             status: import(".prisma/client").$Enums.PaymentStatus;
             remarks: string | null;
             applicationId: string;
-            bankName: string | null;
-            accountNumber: string | null;
-            ifscCode: string | null;
-            accountHolderName: string | null;
             paymentMethod: string | null;
             transactionId: string | null;
             paymentDate: Date | null;
+            bankName: string | null;
             bankReference: string | null;
             upiReference: string | null;
+            accountNumber: string | null;
             failureReason: string | null;
+            ifscCode: string | null;
             processedAt: Date | null;
+            accountHolderName: string | null;
             processedBy: string | null;
         };
     }>;

@@ -21,11 +21,7 @@ export declare class AppController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                id: string;
                 email: string | null;
-                createdAt: Date;
-                updatedAt: Date;
-                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
@@ -35,6 +31,9 @@ export declare class AppController {
                 city: string;
                 state: string;
                 pincode: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -46,16 +45,17 @@ export declare class AppController {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
+                userId: string;
             };
             adminProfile: {
-                isActive: boolean;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                userId: string;
                 firstName: string;
                 lastName: string;
                 phone: string | null;
+                id: string;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 department: string | null;
             };
         };
@@ -67,11 +67,7 @@ export declare class AppController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                id: string;
                 email: string | null;
-                createdAt: Date;
-                updatedAt: Date;
-                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
@@ -81,6 +77,9 @@ export declare class AppController {
                 city: string;
                 state: string;
                 pincode: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -92,6 +91,7 @@ export declare class AppController {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
+                userId: string;
             };
         };
         token: string;
@@ -110,18 +110,18 @@ export declare class AppController {
     }>;
     getStudentProfile(req: any): Promise<{
         user: {
-            isActive: boolean;
-            id: string;
             email: string;
+            id: string;
             role: import(".prisma/client").$Enums.UserRole;
+            isActive: boolean;
             createdAt: Date;
         };
         applications: ({
             scholarship: {
+                id: string;
                 title: string;
                 amount: number;
                 category: import(".prisma/client").$Enums.ScholarshipCategory;
-                id: string;
             };
         } & {
             id: string;
@@ -164,11 +164,7 @@ export declare class AppController {
             verifiedAt: Date | null;
         }[];
     } & {
-        id: string;
         email: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
@@ -178,6 +174,9 @@ export declare class AppController {
         city: string;
         state: string;
         pincode: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -189,5 +188,6 @@ export declare class AppController {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
+        userId: string;
     }>;
 }

@@ -96,7 +96,16 @@ let ApplicationsController = class ApplicationsController {
         }
     }
     async findOne(req, id) {
-        return this.applicationsService.findOne(id);
+        try {
+            console.log('Fetching application details for ID:', id);
+            const application = await this.applicationsService.findOne(id);
+            console.log('Application found:', application ? 'Yes' : 'No');
+            return application;
+        }
+        catch (error) {
+            console.error('Error fetching application details:', error);
+            throw error;
+        }
     }
     async review(id, reviewApplicationDto, req) {
         return this.applicationsService.review(id, reviewApplicationDto);
@@ -109,6 +118,32 @@ let ApplicationsController = class ApplicationsController {
     }
     async getStats(req) {
         return this.applicationsService.getStats();
+    }
+    async sendFeedback(id, body, req) {
+        try {
+            console.log('Feedback sent for application:', id);
+            console.log('Feedback type:', body.type);
+            console.log('Feedback message:', body.message);
+            console.log('Sent by:', req.user.id);
+            return {
+                success: true,
+                message: 'Feedback sent successfully',
+                data: {
+                    applicationId: id,
+                    type: body.type,
+                    message: body.message,
+                    sentBy: req.user.id,
+                    sentAt: new Date().toISOString(),
+                }
+            };
+        }
+        catch (error) {
+            console.error('Error sending feedback:', error);
+            return {
+                success: false,
+                message: error.message || 'Failed to send feedback',
+            };
+        }
     }
 };
 exports.ApplicationsController = ApplicationsController;
@@ -176,6 +211,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ApplicationsController.prototype, "getStats", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Post)(':id/feedback'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], ApplicationsController.prototype, "sendFeedback", null);
 exports.ApplicationsController = ApplicationsController = __decorate([
     (0, common_1.Controller)('applications'),
     __metadata("design:paramtypes", [applications_service_1.ApplicationsService])

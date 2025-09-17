@@ -49,6 +49,13 @@ interface ApplicationFormData {
     currentState: string;
     currentPinCode: string;
   };
+  bankDetails: {
+    bankName: string;
+    accountNumber: string;
+    ifscCode: string;
+    branchName: string;
+    accountHolderName: string;
+  };
   additionalInfo: {
     category: string;
     essay: string;
@@ -101,6 +108,13 @@ export default function ApplicationFormPage() {
       currentCity: '',
       currentState: '',
       currentPinCode: '',
+    },
+    bankDetails: {
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+      branchName: '',
+      accountHolderName: '',
     },
     additionalInfo: {
       category: '',
@@ -251,6 +265,7 @@ export default function ApplicationFormPage() {
         academicInfo: formData.academicInfo,
         familyInfo: formData.familyInfo,
         addressInfo: formData.addressInfo,
+        bankDetails: formData.bankDetails,
         additionalInfo: formData.additionalInfo,
         documents: documentsData,
       };
@@ -420,7 +435,7 @@ export default function ApplicationFormPage() {
                   }`}>
                     {step === 1 && 'Personal Info'}
                     {step === 2 && 'Academic Info'}
-                    {step === 3 && 'Family & Address'}
+                    {step === 3 && 'Family, Address & Bank'}
                     {step === 4 && 'Documents & Submit'}
                   </p>
                 </div>
@@ -608,7 +623,7 @@ export default function ApplicationFormPage() {
           {/* Step 3: Family & Address Information */}
           {currentStep === 3 && (
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Family & Address Information</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">Family, Address & Bank Information</h3>
               
               {/* Family Information */}
               <div className="mb-8">
@@ -735,6 +750,68 @@ export default function ApplicationFormPage() {
                       onChange={(e) => handleInputChange('addressInfo', 'currentPinCode', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="6-digit PIN code"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bank Details */}
+              <div className="mb-8">
+                <h4 className="text-lg font-medium text-gray-800 mb-4">Bank Details</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Bank Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.bankDetails.bankName}
+                      onChange={(e) => handleInputChange('bankDetails', 'bankName', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="e.g., State Bank of India"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Account Number *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.bankDetails.accountNumber}
+                      onChange={(e) => handleInputChange('bankDetails', 'accountNumber', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter your account number"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">IFSC Code *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.bankDetails.ifscCode}
+                      onChange={(e) => handleInputChange('bankDetails', 'ifscCode', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="e.g., SBIN0001234"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Branch Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.bankDetails.branchName}
+                      onChange={(e) => handleInputChange('bankDetails', 'branchName', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter branch name"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Account Holder Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.bankDetails.accountHolderName}
+                      onChange={(e) => handleInputChange('bankDetails', 'accountHolderName', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter account holder name"
                     />
                   </div>
                 </div>

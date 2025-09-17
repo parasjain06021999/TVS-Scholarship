@@ -17,6 +17,7 @@ import { ReportsModule } from './reports/reports.module';
 import { SecurityModule } from './security/security.module';
 import { ComplianceModule } from './compliance/compliance.module';
 import { UploadModule } from './upload/upload.module';
+import { FeedbackModule } from './feedback/feedback.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -52,6 +53,7 @@ import { AppController } from './app.controller';
     SecurityModule,
     ComplianceModule,
     UploadModule,
+    FeedbackModule,
     MailModule,
     HealthModule,
   ],

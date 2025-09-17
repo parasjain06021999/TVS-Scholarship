@@ -16,10 +16,7 @@ export declare class AuthController {
                 email: string;
                 role: import(".prisma/client").$Enums.UserRole;
                 student: {
-                    id: string;
                     email: string | null;
-                    createdAt: Date;
-                    updatedAt: Date;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
@@ -29,6 +26,9 @@ export declare class AuthController {
                     city: string;
                     state: string;
                     pincode: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -52,10 +52,7 @@ export declare class AuthController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                id: string;
                 email: string | null;
-                createdAt: Date;
-                updatedAt: Date;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
@@ -65,6 +62,9 @@ export declare class AuthController {
                 city: string;
                 state: string;
                 pincode: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -79,13 +79,13 @@ export declare class AuthController {
                 userId: string;
             };
             adminProfile: {
+                firstName: string;
+                lastName: string;
+                phone: string | null;
                 id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
-                firstName: string;
-                lastName: string;
-                phone: string | null;
                 userId: string;
                 department: string | null;
             };
@@ -98,10 +98,7 @@ export declare class AuthController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                id: string;
                 email: string | null;
-                createdAt: Date;
-                updatedAt: Date;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
@@ -111,6 +108,9 @@ export declare class AuthController {
                 city: string;
                 state: string;
                 pincode: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -125,13 +125,13 @@ export declare class AuthController {
                 userId: string;
             };
             adminProfile: {
+                firstName: string;
+                lastName: string;
+                phone: string | null;
                 id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
-                firstName: string;
-                lastName: string;
-                phone: string | null;
                 userId: string;
                 department: string | null;
             };
@@ -149,10 +149,7 @@ export declare class AuthController {
     }>;
     getProfile(req: any): Promise<{
         student: {
-            id: string;
             email: string | null;
-            createdAt: Date;
-            updatedAt: Date;
             firstName: string;
             lastName: string;
             dateOfBirth: Date;
@@ -162,6 +159,9 @@ export declare class AuthController {
             city: string;
             state: string;
             pincode: string;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
             country: string;
             aadharNumber: string | null;
             panNumber: string | null;
@@ -176,18 +176,18 @@ export declare class AuthController {
             userId: string;
         };
         adminProfile: {
+            firstName: string;
+            lastName: string;
+            phone: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            firstName: string;
-            lastName: string;
-            phone: string | null;
             userId: string;
             department: string | null;
         };
-        id: string;
         email: string;
+        id: string;
         role: import(".prisma/client").$Enums.UserRole;
         isActive: boolean;
         createdAt: Date;

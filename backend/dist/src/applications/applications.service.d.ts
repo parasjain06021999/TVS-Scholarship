@@ -435,6 +435,16 @@ export declare class ApplicationsService {
             processedAt: Date | null;
             processedBy: string | null;
         }[];
+        feedback: {
+            id: string;
+            createdAt: Date;
+            type: import(".prisma/client").$Enums.FeedbackType;
+            message: string;
+            sender: {
+                id: string;
+                email: string;
+            };
+        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ApplicationStatus;

@@ -363,39 +363,62 @@ let ApplicationsService = class ApplicationsService {
         };
     }
     async findOne(id) {
-        const application = await this.prisma.application.findUnique({
-            where: { id },
-            include: {
-                student: true,
-                scholarship: true,
-                documents: {
-                    select: {
-                        id: true,
-                        type: true,
-                        fileName: true,
-                        originalName: true,
-                        filePath: true,
-                        fileSize: true,
-                        mimeType: true,
-                        isVerified: true,
-                        verifiedBy: true,
-                        verifiedAt: true,
-                        rejectionReason: true,
-                        uploadedAt: true,
-                    }
+        try {
+            console.log('Finding application with ID:', id);
+            const application = await this.prisma.application.findUnique({
+                where: { id },
+                include: {
+                    student: true,
+                    scholarship: true,
+                    documents: {
+                        select: {
+                            id: true,
+                            type: true,
+                            fileName: true,
+                            originalName: true,
+                            filePath: true,
+                            fileSize: true,
+                            mimeType: true,
+                            isVerified: true,
+                            verifiedBy: true,
+                            verifiedAt: true,
+                            rejectionReason: true,
+                            uploadedAt: true,
+                        }
+                    },
+                    payments: true,
+                    feedback: {
+                        select: {
+                            id: true,
+                            type: true,
+                            message: true,
+                            createdAt: true,
+                            sender: {
+                                select: {
+                                    id: true,
+                                    email: true,
+                                }
+                            }
+                        },
+                        orderBy: { createdAt: 'desc' }
+                    },
                 },
-                payments: true,
-            },
-        });
-        if (!application) {
-            throw new common_1.NotFoundException('Application not found');
+            });
+            if (!application) {
+                console.log('Application not found for ID:', id);
+                throw new common_1.NotFoundException('Application not found');
+            }
+            console.log('Application found successfully:', {
+                id: application.id,
+                documentsCount: application.documents?.length || 0,
+                feedbackCount: application.feedback?.length || 0
+            });
+            return application;
         }
-        console.log('Application found:', {
-            id: application.id,
-            documentsCount: application.documents?.length || 0,
-            documents: application.documents
-        });
-        return application;
+        catch (error) {
+            console.error('Error in findOne method:', error);
+            throw error;
+        }
     }
     async update(id, updateApplicationDto) {
         return this.prisma.application.update({

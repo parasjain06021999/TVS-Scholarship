@@ -6,6 +6,9 @@ export declare class ScholarshipsService {
     constructor(prisma: PrismaService);
     create(createScholarshipDto: CreateScholarshipDto, createdBy: string): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -16,15 +19,12 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     findAll(filters: {
         page: number;
@@ -46,10 +46,10 @@ export declare class ScholarshipsService {
     findOne(id: string): Promise<{
         applications: ({
             student: {
-                id: string;
+                email: string;
                 firstName: string;
                 lastName: string;
-                email: string;
+                id: string;
             };
         } & {
             id: string;
@@ -77,6 +77,9 @@ export declare class ScholarshipsService {
         })[];
     } & {
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -87,18 +90,18 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     update(id: string, updateScholarshipDto: UpdateScholarshipDto): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -109,18 +112,18 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     remove(id: string): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -131,18 +134,18 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     getEligibleScholarships(studentId: string): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -153,15 +156,12 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     getScholarshipStats(id: string): Promise<{
         totalApplications: number;
@@ -173,6 +173,9 @@ export declare class ScholarshipsService {
     }>;
     toggleActive(id: string): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -183,18 +186,18 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     toggleStatus(id: string): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -205,18 +208,18 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     findActive(): Promise<{
         id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
         description: string;
         eligibilityCriteria: string;
@@ -227,15 +230,12 @@ export declare class ScholarshipsService {
         applicationStartDate: Date;
         applicationEndDate: Date;
         academicYear: string;
-        isActive: boolean;
         maxApplications: number | null;
         currentApplications: number;
         requirements: import("@prisma/client/runtime/library").JsonValue | null;
         documentsRequired: string[];
         priority: number;
         createdBy: string;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     getApplications(scholarshipId: string, filters: any): Promise<{
         data: ({

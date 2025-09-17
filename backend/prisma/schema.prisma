@@ -28,6 +28,8 @@ model User {
   mobileDevices     MobileDevice[]
   pushNotifications PushNotification[]
   consentRecords    ConsentRecord[]
+  sentFeedback      Feedback[]      @relation("SentFeedback")
+  receivedFeedback  Feedback[]      @relation("ReceivedFeedback")
 
   @@map("users")
 }
@@ -257,6 +259,7 @@ model Application {
   scholarship Scholarship @relation(fields: [scholarshipId], references: [id])
   documents   Document[]
   payments    Payment[]
+  feedback    Feedback[]
 
   @@unique([studentId, scholarshipId])
   @@map("applications")
@@ -720,4 +723,30 @@ model ConsentRecord {
   user User @relation(fields: [userId], references: [id])
 
   @@map("consent_records")
+}
+
+// Feedback System
+model Feedback {
+  id            String   @id @default(cuid())
+  applicationId String
+  senderId      String
+  receiverId    String
+  type          FeedbackType
+  message       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  sender      User        @relation("SentFeedback", fields: [senderId], references: [id])
+  receiver    User        @relation("ReceivedFeedback", fields: [receiverId], references: [id])
+
+  @@map("feedback")
+}
+
+enum FeedbackType {
+  GENERAL
+  MISSING_DOCUMENTS
+  INFORMATION_REQUEST
+  CLARIFICATION
+  OTHER
 }

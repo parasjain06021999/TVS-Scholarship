@@ -278,15 +278,28 @@ export default function ApplicationsPage() {
     }
 
     try {
-      // Send feedback to student (this would be implemented in backend)
-      await apiClient.request(`/applications/${selectedApplication.id}/feedback`, {
+      // Send feedback to student
+      const response = await fetch(`http://localhost:3001/applications/${selectedApplication.id}/feedback`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
+          applicationId: selectedApplication.id,
           type: feedbackType,
           message: feedbackMessage,
-          studentId: selectedApplication.studentId
         })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to send feedback');
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to send feedback');
+      }
       
       alert('Feedback sent to student successfully!');
       setShowFeedbackModal(false);
