@@ -58,42 +58,6 @@ export default function LoginPage() {
 
       console.log('Attempting', isSignUp ? 'signup' : 'login', 'with:', formData);
       
-      // Mock authentication for testing
-      if (formData.email === 'student1@example.com' && formData.password === 'password123') {
-        const mockResponse = {
-          token: 'mock-jwt-token-' + Date.now(),
-          user: {
-            id: '1',
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'student1@example.com',
-            role: 'STUDENT'
-          }
-        };
-        
-        localStorage.setItem('token', mockResponse.token);
-        localStorage.setItem('user', JSON.stringify(mockResponse.user));
-        router.push('/dashboard');
-        return;
-      }
-
-      if (formData.email === 'admin@tvsscholarship.com' && formData.password === 'admin123') {
-        const mockResponse = {
-          token: 'mock-admin-jwt-token-' + Date.now(),
-          user: {
-            id: '2',
-            firstName: 'Admin',
-            lastName: 'User',
-            email: 'admin@tvsscholarship.com',
-            role: 'ADMIN'
-          }
-        };
-        
-        localStorage.setItem('token', mockResponse.token);
-        localStorage.setItem('user', JSON.stringify(mockResponse.user));
-        router.push('/admin/dashboard');
-        return;
-      }
 
       // Try actual API call
       const endpoint = isSignUp ? '/auth/register' : '/auth/login';
@@ -211,21 +175,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Test Credentials */}
-          {!isSignUp && (
-            <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl">
-              <div className="flex items-center mb-2">
-                <svg className="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                </svg>
-                <p className="text-sm font-semibold text-blue-800">Test Credentials</p>
-              </div>
-              <div className="text-xs text-blue-700 space-y-1">
-                <p><span className="font-medium">Student:</span> student1@example.com / password123</p>
-                <p><span className="font-medium">Admin:</span> admin@tvsscholarship.com / admin123</p>
-              </div>
-            </div>
-          )}
 
           {/* Google Auth Button */}
           <button

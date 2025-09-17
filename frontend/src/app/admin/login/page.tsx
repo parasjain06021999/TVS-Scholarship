@@ -130,9 +130,6 @@ export default function AdminLoginPage() {
           </Link>
         </div>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Test Admin Credentials: admin@tvsscholarship.com / admin123</p>
-        </div>
       </div>
     </div>
   );
