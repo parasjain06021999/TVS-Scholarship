@@ -627,7 +627,7 @@ export default function ApplicationsPage() {
                                   {doc.isVerified ? 'VERIFIED' : doc.rejectionReason ? 'REJECTED' : 'PENDING'}
                                 </span>
                                 <a 
-                                  href={`${API_CONFIG.BASE_URL}${doc.filePath}`} 
+                                  href={`${'https://tvs-scholarship.onrender.com'}${doc.filePath}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="text-blue-600 hover:text-blue-800 text-sm"

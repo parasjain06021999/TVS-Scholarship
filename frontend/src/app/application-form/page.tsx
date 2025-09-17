@@ -255,7 +255,7 @@ export default function ApplicationFormPage() {
         documents: documentsData,
       };
 
-      const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.APPLICATIONS), {
+      const response = await fetch('https://tvs-scholarship.onrender.com/applications', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
