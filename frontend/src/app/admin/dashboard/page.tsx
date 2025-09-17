@@ -63,7 +63,7 @@ export default function AdminDashboardPage() {
       setLoading(true);
 
       // Fetch stats
-      const statsRes = await fetch('http://localhost:3001/applications/stats/overview', {
+      const statsRes = await fetch('https://tvs-scholarship-a1fi.vercel.app/applications/stats/overview', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       if (statsRes.ok) {
@@ -80,7 +80,7 @@ export default function AdminDashboardPage() {
       }
 
       // Fetch recent applications
-      const appsRes = await fetch('http://localhost:3001/applications?page=1&limit=5', {
+      const appsRes = await fetch('https://tvs-scholarship-a1fi.vercel.app/applications?page=1&limit=5', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       if (appsRes.ok) {

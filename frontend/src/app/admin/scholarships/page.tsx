@@ -37,7 +37,7 @@ export default function AdminScholarshipsPage() {
   const fetchRows = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:3001/scholarships', {
+      const res = await fetch('https://tvs-scholarship-a1fi.vercel.app/scholarships', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       if (!res.ok) throw new Error('Failed to load scholarships');
@@ -65,7 +65,7 @@ export default function AdminScholarshipsPage() {
 
   const toggleStatus = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3001/scholarships/${id}/toggle-status`, {
+      const res = await fetch(`https://tvs-scholarship-a1fi.vercel.app/scholarships/${id}/toggle-status`, {
         method: 'PATCH',
         headers: { 
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

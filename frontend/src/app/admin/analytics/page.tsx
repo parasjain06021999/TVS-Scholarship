@@ -224,7 +224,7 @@ export default function AnalyticsPage() {
       console.log('Fetching analytics data for filter:', filter);
       
       // Fetch applications data directly
-      const appsResponse = await fetch(`http://localhost:3001/applications?page=1&limit=1000`, {
+      const appsResponse = await fetch(`https://tvs-scholarship-a1fi.vercel.app/applications?page=1&limit=1000`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       

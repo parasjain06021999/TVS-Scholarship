@@ -149,7 +149,7 @@ export default function ApplicationFormPage() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3001/scholarships/${scholarshipId}`, {
+      const response = await fetch(`https://tvs-scholarship-a1fi.vercel.app/scholarships/${scholarshipId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ export default function ApplicationFormPage() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:3001/upload/document', {
+      const response = await fetch('https://tvs-scholarship-a1fi.vercel.app/upload/document', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -255,7 +255,7 @@ export default function ApplicationFormPage() {
         documents: documentsData,
       };
 
-      const response = await fetch('http://localhost:3001/applications', {
+      const response = await fetch('https://tvs-scholarship-a1fi.vercel.app/applications', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
