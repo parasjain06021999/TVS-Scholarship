@@ -97,6 +97,30 @@ export default function Chatbot({ isOpen, onClose }: ChatbotProps) {
     });
   };
 
+  // Render helper: clean simple markdown (**bold**, * bullets) into clean UI
+  const renderContent = (text: string) => {
+    if (!text) return null;
+    // Remove bold markers **text** -> text
+    const cleaned = text.replace(/\*\*(.*?)\*\*/g, '$1');
+    const lines = cleaned.split('\n');
+    return (
+      <div className="space-y-1">
+        {lines.map((line, idx) => {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            return (
+              <div key={idx} className="flex items-start space-x-2">
+                <span className="mt-1">•</span>
+                <span>{trimmed.slice(2)}</span>
+              </div>
+            );
+          }
+          return <div key={idx}>{line}</div>;
+        })}
+      </div>
+    );
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -153,7 +177,7 @@ export default function Chatbot({ isOpen, onClose }: ChatbotProps) {
                     : 'bg-indigo-600 text-white'
                 }`}
               >
-                <div className="whitespace-pre-wrap">{message.message}</div>
+                <div className="whitespace-pre-wrap">{renderContent(message.message)}</div>
                 <div
                   className={`text-xs mt-1 ${
                     message.isFromBot ? 'text-gray-500' : 'text-indigo-100'
