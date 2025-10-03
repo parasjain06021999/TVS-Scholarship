@@ -70,8 +70,8 @@ export declare class GdprService {
         success: boolean;
         data: ({
             user: {
-                email: string;
                 id: string;
+                email: string;
                 role: import(".prisma/client").$Enums.UserRole;
             };
         } & {

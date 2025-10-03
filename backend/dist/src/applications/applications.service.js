@@ -413,6 +413,12 @@ let ApplicationsService = class ApplicationsService {
                 documentsCount: application.documents?.length || 0,
                 feedbackCount: application.feedback?.length || 0
             });
+            console.log('Application Data Structure:', {
+                applicationData: application.applicationData,
+                academicInfo: application.academicInfo,
+                familyInfo: application.familyInfo,
+                financialInfo: application.financialInfo
+            });
             return application;
         }
         catch (error) {

@@ -38,8 +38,8 @@ export declare class SecurityController {
         success: boolean;
         data: ({
             user: {
-                email: string;
                 id: string;
+                email: string;
                 role: import(".prisma/client").$Enums.UserRole;
             };
         } & {

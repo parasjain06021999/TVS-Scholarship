@@ -7,12 +7,12 @@ export declare class DocumentsController {
         message: string;
         data: {
             id: string;
-            isVerified: boolean;
+            type: import(".prisma/client").$Enums.DocumentType;
             studentId: string;
             rejectionReason: string | null;
+            isVerified: boolean;
             uploadedAt: Date;
             applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
@@ -26,12 +26,12 @@ export declare class DocumentsController {
         success: boolean;
         data: {
             id: string;
-            isVerified: boolean;
+            type: import(".prisma/client").$Enums.DocumentType;
             studentId: string;
             rejectionReason: string | null;
+            isVerified: boolean;
             uploadedAt: Date;
             applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
@@ -45,12 +45,12 @@ export declare class DocumentsController {
         success: boolean;
         data: {
             id: string;
-            isVerified: boolean;
+            type: import(".prisma/client").$Enums.DocumentType;
             studentId: string;
             rejectionReason: string | null;
+            isVerified: boolean;
             uploadedAt: Date;
             applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;
@@ -68,12 +68,12 @@ export declare class DocumentsController {
         message: string;
         data: {
             id: string;
-            isVerified: boolean;
+            type: import(".prisma/client").$Enums.DocumentType;
             studentId: string;
             rejectionReason: string | null;
+            isVerified: boolean;
             uploadedAt: Date;
             applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
             fileName: string;
             originalName: string;
             filePath: string;

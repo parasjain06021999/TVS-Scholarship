@@ -21,19 +21,20 @@ export declare class AppController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                email: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
                 gender: import(".prisma/client").$Enums.Gender;
                 phone: string | null;
+                email: string | null;
                 address: string;
                 city: string;
                 state: string;
                 pincode: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -45,17 +46,16 @@ export declare class AppController {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
-                userId: string;
             };
             adminProfile: {
-                firstName: string;
-                lastName: string;
-                phone: string | null;
                 id: string;
-                isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 userId: string;
+                firstName: string;
+                lastName: string;
+                phone: string | null;
+                isActive: boolean;
                 department: string | null;
             };
         };
@@ -67,19 +67,20 @@ export declare class AppController {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                email: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
                 gender: import(".prisma/client").$Enums.Gender;
                 phone: string | null;
+                email: string | null;
                 address: string;
                 city: string;
                 state: string;
                 pincode: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -91,7 +92,6 @@ export declare class AppController {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
-                userId: string;
             };
         };
         token: string;
@@ -110,12 +110,28 @@ export declare class AppController {
     }>;
     getStudentProfile(req: any): Promise<{
         user: {
-            email: string;
             id: string;
+            createdAt: Date;
+            email: string;
             role: import(".prisma/client").$Enums.UserRole;
             isActive: boolean;
-            createdAt: Date;
         };
+        documents: {
+            id: string;
+            type: import(".prisma/client").$Enums.DocumentType;
+            studentId: string;
+            rejectionReason: string | null;
+            isVerified: boolean;
+            uploadedAt: Date;
+            applicationId: string | null;
+            fileName: string;
+            originalName: string;
+            filePath: string;
+            fileSize: number;
+            mimeType: string;
+            verifiedBy: string | null;
+            verifiedAt: Date | null;
+        }[];
         applications: ({
             scholarship: {
                 id: string;
@@ -147,36 +163,21 @@ export declare class AppController {
             approvedAt: Date | null;
             rejectedAt: Date | null;
         })[];
-        documents: {
-            id: string;
-            isVerified: boolean;
-            studentId: string;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
-            fileName: string;
-            originalName: string;
-            filePath: string;
-            fileSize: number;
-            mimeType: string;
-            verifiedBy: string | null;
-            verifiedAt: Date | null;
-        }[];
     } & {
-        email: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
         gender: import(".prisma/client").$Enums.Gender;
         phone: string | null;
+        email: string | null;
         address: string;
         city: string;
         state: string;
         pincode: string;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -188,6 +189,5 @@ export declare class AppController {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
-        userId: string;
     }>;
 }

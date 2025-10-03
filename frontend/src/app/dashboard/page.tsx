@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Chatbot from '@/components/chatbot/Chatbot';
 
 // Global flag to prevent duplicate API calls across component instances
 let isDataFetching = false;
@@ -45,6 +46,7 @@ export default function DashboardPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const router = useRouter();
   const fetchRef = useRef(false);
 
@@ -612,6 +614,23 @@ export default function DashboardPage() {
           </div>
         </div>
       </footer>
+
+      {/* Chatbot Button */}
+      <button
+        onClick={() => setIsChatbotOpen(true)}
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 z-40"
+        title="Ask TVS Assistant"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      </button>
+
+      {/* Chatbot Component */}
+      <Chatbot 
+        isOpen={isChatbotOpen} 
+        onClose={() => setIsChatbotOpen(false)} 
+      />
     </div>
   );
 }

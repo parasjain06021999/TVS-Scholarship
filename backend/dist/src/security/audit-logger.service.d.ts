@@ -25,8 +25,8 @@ export declare class AuditLoggerService {
         success: boolean;
         data: ({
             user: {
-                email: string;
                 id: string;
+                email: string;
                 role: import(".prisma/client").$Enums.UserRole;
             };
         } & {

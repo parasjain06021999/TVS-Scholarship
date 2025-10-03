@@ -8,6 +8,7 @@ import Testimonials from '@/components/home/Testimonials';
 import CTA from '@/components/home/CTA';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
+import HomeChatbotLauncher from '@/components/chatbot/HomeChatbotLauncher';
 
 export const metadata: Metadata = {
   title: 'TVS Scholarship Ecosystem - Empowering Education',
@@ -37,6 +38,9 @@ export default function HomePage() {
       </main>
       
       <Footer />
+
+      {/* Public Chatbot Launcher (Client Component) */}
+      <HomeChatbotLauncher />
     </div>
   );
 }

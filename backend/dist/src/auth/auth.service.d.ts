@@ -14,19 +14,20 @@ export declare class AuthService {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                email: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
                 gender: import(".prisma/client").$Enums.Gender;
                 phone: string | null;
+                email: string | null;
                 address: string;
                 city: string;
                 state: string;
                 pincode: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -38,7 +39,6 @@ export declare class AuthService {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
-                userId: string;
             };
         };
         token: string;
@@ -49,19 +49,20 @@ export declare class AuthService {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                email: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
                 gender: import(".prisma/client").$Enums.Gender;
                 phone: string | null;
+                email: string | null;
                 address: string;
                 city: string;
                 state: string;
                 pincode: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -73,17 +74,16 @@ export declare class AuthService {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
-                userId: string;
             };
             adminProfile: {
-                firstName: string;
-                lastName: string;
-                phone: string | null;
                 id: string;
-                isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 userId: string;
+                firstName: string;
+                lastName: string;
+                phone: string | null;
+                isActive: boolean;
                 department: string | null;
             };
         };
@@ -91,19 +91,20 @@ export declare class AuthService {
     }>;
     validateUser(email: string, password: string): Promise<{
         student: {
-            email: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
             firstName: string;
             lastName: string;
             dateOfBirth: Date;
             gender: import(".prisma/client").$Enums.Gender;
             phone: string | null;
+            email: string | null;
             address: string;
             city: string;
             state: string;
             pincode: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
             country: string;
             aadharNumber: string | null;
             panNumber: string | null;
@@ -115,25 +116,24 @@ export declare class AuthService {
             emergencyContact: string | null;
             profileImage: string | null;
             isVerified: boolean;
-            userId: string;
         };
         adminProfile: {
-            firstName: string;
-            lastName: string;
-            phone: string | null;
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             userId: string;
+            firstName: string;
+            lastName: string;
+            phone: string | null;
+            isActive: boolean;
             department: string | null;
         };
-        email: string;
         id: string;
-        role: import(".prisma/client").$Enums.UserRole;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        email: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        isActive: boolean;
     }>;
     refreshToken(userId: string): Promise<{
         user: {
@@ -141,19 +141,20 @@ export declare class AuthService {
             email: string;
             role: import(".prisma/client").$Enums.UserRole;
             student: {
-                email: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
                 firstName: string;
                 lastName: string;
                 dateOfBirth: Date;
                 gender: import(".prisma/client").$Enums.Gender;
                 phone: string | null;
+                email: string | null;
                 address: string;
                 city: string;
                 state: string;
                 pincode: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
                 country: string;
                 aadharNumber: string | null;
                 panNumber: string | null;
@@ -165,17 +166,16 @@ export declare class AuthService {
                 emergencyContact: string | null;
                 profileImage: string | null;
                 isVerified: boolean;
-                userId: string;
             };
             adminProfile: {
-                firstName: string;
-                lastName: string;
-                phone: string | null;
                 id: string;
-                isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 userId: string;
+                firstName: string;
+                lastName: string;
+                phone: string | null;
+                isActive: boolean;
                 department: string | null;
             };
         };
@@ -195,19 +195,20 @@ export declare class AuthService {
     }>;
     getProfile(userId: string): Promise<{
         student: {
-            email: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
             firstName: string;
             lastName: string;
             dateOfBirth: Date;
             gender: import(".prisma/client").$Enums.Gender;
             phone: string | null;
+            email: string | null;
             address: string;
             city: string;
             state: string;
             pincode: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
             country: string;
             aadharNumber: string | null;
             panNumber: string | null;
@@ -219,25 +220,24 @@ export declare class AuthService {
             emergencyContact: string | null;
             profileImage: string | null;
             isVerified: boolean;
-            userId: string;
         };
         adminProfile: {
-            firstName: string;
-            lastName: string;
-            phone: string | null;
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             userId: string;
+            firstName: string;
+            lastName: string;
+            phone: string | null;
+            isActive: boolean;
             department: string | null;
         };
-        email: string;
         id: string;
-        role: import(".prisma/client").$Enums.UserRole;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        email: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        isActive: boolean;
     }>;
     enable2FA(userId: string): Promise<{
         message: string;

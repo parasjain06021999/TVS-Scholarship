@@ -9,11 +9,11 @@ export declare class ScholarshipsController {
         message: string;
         data: {
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            title: string;
             description: string;
+            isActive: boolean;
+            title: string;
             eligibilityCriteria: string;
             amount: number;
             maxAmount: number | null;
@@ -48,11 +48,11 @@ export declare class ScholarshipsController {
         message: string;
         data: {
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            title: string;
             description: string;
+            isActive: boolean;
+            title: string;
             eligibilityCriteria: string;
             amount: number;
             maxAmount: number | null;
@@ -75,10 +75,10 @@ export declare class ScholarshipsController {
         data: {
             applications: ({
                 student: {
-                    email: string;
+                    id: string;
                     firstName: string;
                     lastName: string;
-                    id: string;
+                    email: string;
                 };
             } & {
                 id: string;
@@ -106,11 +106,11 @@ export declare class ScholarshipsController {
             })[];
         } & {
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            title: string;
             description: string;
+            isActive: boolean;
+            title: string;
             eligibilityCriteria: string;
             amount: number;
             maxAmount: number | null;
@@ -132,11 +132,11 @@ export declare class ScholarshipsController {
         message: string;
         data: {
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            title: string;
             description: string;
+            isActive: boolean;
+            title: string;
             eligibilityCriteria: string;
             amount: number;
             maxAmount: number | null;
@@ -223,11 +223,11 @@ export declare class ScholarshipsController {
         message: string;
         data: {
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            title: string;
             description: string;
+            isActive: boolean;
+            title: string;
             eligibilityCriteria: string;
             amount: number;
             maxAmount: number | null;

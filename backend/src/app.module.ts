@@ -18,6 +18,7 @@ import { SecurityModule } from './security/security.module';
 import { ComplianceModule } from './compliance/compliance.module';
 import { UploadModule } from './upload/upload.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { ChatbotModule } from './chatbot/chatbot.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -54,6 +55,7 @@ import { AppController } from './app.controller';
     ComplianceModule,
     UploadModule,
     FeedbackModule,
+    ChatbotModule,
     MailModule,
     HealthModule,
   ],

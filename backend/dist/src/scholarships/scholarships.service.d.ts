@@ -6,11 +6,11 @@ export declare class ScholarshipsService {
     constructor(prisma: PrismaService);
     create(createScholarshipDto: CreateScholarshipDto, createdBy: string): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -46,10 +46,10 @@ export declare class ScholarshipsService {
     findOne(id: string): Promise<{
         applications: ({
             student: {
-                email: string;
+                id: string;
                 firstName: string;
                 lastName: string;
-                id: string;
+                email: string;
             };
         } & {
             id: string;
@@ -77,11 +77,11 @@ export declare class ScholarshipsService {
         })[];
     } & {
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -99,11 +99,11 @@ export declare class ScholarshipsService {
     }>;
     update(id: string, updateScholarshipDto: UpdateScholarshipDto): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -121,11 +121,11 @@ export declare class ScholarshipsService {
     }>;
     remove(id: string): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -143,11 +143,11 @@ export declare class ScholarshipsService {
     }>;
     getEligibleScholarships(studentId: string): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -173,11 +173,11 @@ export declare class ScholarshipsService {
     }>;
     toggleActive(id: string): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -195,11 +195,11 @@ export declare class ScholarshipsService {
     }>;
     toggleStatus(id: string): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;
@@ -217,11 +217,11 @@ export declare class ScholarshipsService {
     }>;
     findActive(): Promise<{
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
         description: string;
+        isActive: boolean;
+        title: string;
         eligibilityCriteria: string;
         amount: number;
         maxAmount: number | null;

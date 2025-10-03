@@ -23,19 +23,20 @@ export declare class ReportsService {
             monthlyData: {};
             applications: ({
                 student: {
-                    email: string | null;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    userId: string;
                     firstName: string;
                     lastName: string;
                     dateOfBirth: Date;
                     gender: import(".prisma/client").$Enums.Gender;
                     phone: string | null;
+                    email: string | null;
                     address: string;
                     city: string;
                     state: string;
                     pincode: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
                     country: string;
                     aadharNumber: string | null;
                     panNumber: string | null;
@@ -47,15 +48,14 @@ export declare class ReportsService {
                     emergencyContact: string | null;
                     profileImage: string | null;
                     isVerified: boolean;
-                    userId: string;
                 };
                 scholarship: {
                     id: string;
-                    isActive: boolean;
                     createdAt: Date;
                     updatedAt: Date;
-                    title: string;
                     description: string;
+                    isActive: boolean;
+                    title: string;
                     eligibilityCriteria: string;
                     amount: number;
                     maxAmount: number | null;
@@ -119,19 +119,20 @@ export declare class ReportsService {
             payments: ({
                 application: {
                     student: {
-                        email: string | null;
+                        id: string;
+                        createdAt: Date;
+                        updatedAt: Date;
+                        userId: string;
                         firstName: string;
                         lastName: string;
                         dateOfBirth: Date;
                         gender: import(".prisma/client").$Enums.Gender;
                         phone: string | null;
+                        email: string | null;
                         address: string;
                         city: string;
                         state: string;
                         pincode: string;
-                        id: string;
-                        createdAt: Date;
-                        updatedAt: Date;
                         country: string;
                         aadharNumber: string | null;
                         panNumber: string | null;
@@ -143,15 +144,14 @@ export declare class ReportsService {
                         emergencyContact: string | null;
                         profileImage: string | null;
                         isVerified: boolean;
-                        userId: string;
                     };
                     scholarship: {
                         id: string;
-                        isActive: boolean;
                         createdAt: Date;
                         updatedAt: Date;
-                        title: string;
                         description: string;
+                        isActive: boolean;
+                        title: string;
                         eligibilityCriteria: string;
                         amount: number;
                         maxAmount: number | null;
@@ -195,9 +195,9 @@ export declare class ReportsService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                amount: number;
                 status: import(".prisma/client").$Enums.PaymentStatus;
                 remarks: string | null;
+                amount: number;
                 applicationId: string;
                 paymentMethod: string | null;
                 transactionId: string | null;

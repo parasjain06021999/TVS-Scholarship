@@ -8,7 +8,7 @@ export declare class FeedbackController {
         message: string;
         data: {
             applicationId: string;
-            type: "GENERAL" | "DOCUMENT_REQUEST" | "INFORMATION_REQUEST" | "CLARIFICATION";
+            type: "GENERAL" | "INFORMATION_REQUEST" | "CLARIFICATION" | "DOCUMENT_REQUEST";
             message: string;
             sentBy: any;
             sentAt: string;

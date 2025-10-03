@@ -27,6 +27,7 @@ const security_module_1 = require("./security/security.module");
 const compliance_module_1 = require("./compliance/compliance.module");
 const upload_module_1 = require("./upload/upload.module");
 const feedback_module_1 = require("./feedback/feedback.module");
+const chatbot_module_1 = require("./chatbot/chatbot.module");
 const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
@@ -59,6 +60,7 @@ exports.AppModule = AppModule = __decorate([
             compliance_module_1.ComplianceModule,
             upload_module_1.UploadModule,
             feedback_module_1.FeedbackModule,
+            chatbot_module_1.ChatbotModule,
             mail_module_1.MailModule,
             health_module_1.HealthModule,
         ],

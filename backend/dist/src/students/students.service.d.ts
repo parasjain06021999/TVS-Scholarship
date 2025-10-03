@@ -41,19 +41,20 @@ export declare class StudentsService {
                 isActive: boolean;
             };
         } & {
-            email: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
             firstName: string;
             lastName: string;
             dateOfBirth: Date;
             gender: import(".prisma/client").$Enums.Gender;
             phone: string | null;
+            email: string | null;
             address: string;
             city: string;
             state: string;
             pincode: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
             country: string;
             aadharNumber: string | null;
             panNumber: string | null;
@@ -65,7 +66,6 @@ export declare class StudentsService {
             emergencyContact: string | null;
             profileImage: string | null;
             isVerified: boolean;
-            userId: string;
         })[];
         pagination: {
             page: number;
@@ -75,19 +75,20 @@ export declare class StudentsService {
         };
     }>;
     remove(id: string): Promise<{
-        email: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
         gender: import(".prisma/client").$Enums.Gender;
         phone: string | null;
+        email: string | null;
         address: string;
         city: string;
         state: string;
         pincode: string;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -99,7 +100,6 @@ export declare class StudentsService {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
-        userId: string;
     }>;
     getApplications(studentId: string): Promise<({
         scholarship: {
@@ -133,12 +133,12 @@ export declare class StudentsService {
     })[]>;
     getDocuments(studentId: string): Promise<{
         id: string;
-        isVerified: boolean;
+        type: import(".prisma/client").$Enums.DocumentType;
         studentId: string;
         rejectionReason: string | null;
+        isVerified: boolean;
         uploadedAt: Date;
         applicationId: string | null;
-        type: import(".prisma/client").$Enums.DocumentType;
         fileName: string;
         originalName: string;
         filePath: string;
@@ -149,12 +149,28 @@ export declare class StudentsService {
     }[]>;
     findOne(id: string, userId: string, userRole: UserRole): Promise<{
         user: {
-            email: string;
             id: string;
+            createdAt: Date;
+            email: string;
             role: import(".prisma/client").$Enums.UserRole;
             isActive: boolean;
-            createdAt: Date;
         };
+        documents: {
+            id: string;
+            type: import(".prisma/client").$Enums.DocumentType;
+            studentId: string;
+            rejectionReason: string | null;
+            isVerified: boolean;
+            uploadedAt: Date;
+            applicationId: string | null;
+            fileName: string;
+            originalName: string;
+            filePath: string;
+            fileSize: number;
+            mimeType: string;
+            verifiedBy: string | null;
+            verifiedAt: Date | null;
+        }[];
         applications: ({
             scholarship: {
                 id: string;
@@ -186,36 +202,21 @@ export declare class StudentsService {
             approvedAt: Date | null;
             rejectedAt: Date | null;
         })[];
-        documents: {
-            id: string;
-            isVerified: boolean;
-            studentId: string;
-            rejectionReason: string | null;
-            uploadedAt: Date;
-            applicationId: string | null;
-            type: import(".prisma/client").$Enums.DocumentType;
-            fileName: string;
-            originalName: string;
-            filePath: string;
-            fileSize: number;
-            mimeType: string;
-            verifiedBy: string | null;
-            verifiedAt: Date | null;
-        }[];
     } & {
-        email: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
         gender: import(".prisma/client").$Enums.Gender;
         phone: string | null;
+        email: string | null;
         address: string;
         city: string;
         state: string;
         pincode: string;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -227,29 +228,29 @@ export declare class StudentsService {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
-        userId: string;
     }>;
     update(id: string, updateStudentDto: UpdateStudentDto, userId: string, userRole: UserRole): Promise<{
         user: {
-            email: string;
             id: string;
+            email: string;
             role: import(".prisma/client").$Enums.UserRole;
             isActive: boolean;
         };
     } & {
-        email: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
         gender: import(".prisma/client").$Enums.Gender;
         phone: string | null;
+        email: string | null;
         address: string;
         city: string;
         state: string;
         pincode: string;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -261,7 +262,6 @@ export declare class StudentsService {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
-        userId: string;
     }>;
     getStudentStats(userId: string): Promise<{
         totalApplications: number;
@@ -273,19 +273,20 @@ export declare class StudentsService {
         totalAwardedAmount: number;
     }>;
     verifyStudent(id: string, userRole: UserRole): Promise<{
-        email: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
         firstName: string;
         lastName: string;
         dateOfBirth: Date;
         gender: import(".prisma/client").$Enums.Gender;
         phone: string | null;
+        email: string | null;
         address: string;
         city: string;
         state: string;
         pincode: string;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
         country: string;
         aadharNumber: string | null;
         panNumber: string | null;
@@ -297,6 +298,5 @@ export declare class StudentsService {
         emergencyContact: string | null;
         profileImage: string | null;
         isVerified: boolean;
-        userId: string;
     }>;
 }

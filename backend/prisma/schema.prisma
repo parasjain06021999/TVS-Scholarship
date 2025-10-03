@@ -30,6 +30,7 @@ model User {
   consentRecords    ConsentRecord[]
   sentFeedback      Feedback[]      @relation("SentFeedback")
   receivedFeedback  Feedback[]      @relation("ReceivedFeedback")
+  chatMessages      ChatMessage[]
 
   @@map("users")
 }
@@ -749,4 +750,30 @@ enum FeedbackType {
   INFORMATION_REQUEST
   CLARIFICATION
   OTHER
+}
+
+// Chatbot System
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  response  String?
+  isFromBot Boolean  @default(false)
+  messageType ChatMessageType @default(USER_MESSAGE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
+
+enum ChatMessageType {
+  USER_MESSAGE
+  BOT_RESPONSE
+  SYSTEM_MESSAGE
+  FAQ_RESPONSE
+  APPLICATION_STATUS
+  SCHOLARSHIP_INFO
+  GENERAL_QUERY
 }
