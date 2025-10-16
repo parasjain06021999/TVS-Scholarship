@@ -113,20 +113,20 @@ export default function Stats() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {stats.map((stat, index) => (
             <div
               key={stat.id}
-              className="group relative"
+              className="group relative w-full"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 text-center hover:shadow-medium transition-all duration-300 group-hover:-translate-y-2">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${stat.bgColor} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <stat.icon className={`w-8 h-8 ${stat.color}`} />
+              <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-6 lg:p-8 text-center hover:shadow-medium transition-all duration-300 group-hover:-translate-y-2 h-full flex flex-col min-h-[280px]">
+                <div className={`inline-flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 rounded-2xl ${stat.bgColor} mb-4 lg:mb-5 group-hover:scale-110 transition-transform duration-300 mx-auto`}>
+                  <stat.icon className={`w-6 h-6 lg:w-8 lg:h-8 ${stat.color}`} />
                 </div>
                 
-                <div className="mb-4">
-                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                <div className="flex-1 flex flex-col justify-center px-3">
+                  <div className="text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                     {stat.id === 'students' && animatedStats.students ? (
                       `${animatedStats.students.toLocaleString()}+`
                     ) : stat.id === 'scholarships' && animatedStats.scholarships ? (
@@ -139,16 +139,16 @@ export default function Stats() {
                       stat.value
                     )}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-sm lg:text-base font-semibold text-gray-900 mb-3 leading-tight text-center">
                     {stat.name}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs lg:text-sm text-gray-600 leading-relaxed text-center">
                     {stat.description}
                   </p>
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden mt-5">
                   <div 
                     className={`h-full bg-gradient-to-r ${stat.color.replace('text-', 'from-')} to-${stat.color.replace('text-', '')} rounded-full transition-all duration-1000 ease-out`}
                     style={{ 

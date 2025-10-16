@@ -31,17 +31,17 @@ export default function EligibilityChecker() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 w-full">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+    <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 w-full max-w-4xl mx-auto">
+      <div className="mb-6 text-center">
+        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
           Quick Eligibility Checker
         </h2>
-        <p className="text-gray-600">
+        <p className="text-base lg:text-lg text-gray-600">
           Find out which scholarships you're eligible for in seconds
         </p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
@@ -49,7 +49,7 @@ export default function EligibilityChecker() {
               id="state"
               value={formData.state} 
               onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm lg:text-base"
             >
               <option value="">Select State</option>
               <option value="tamil-nadu">Tamil Nadu</option>
@@ -66,7 +66,7 @@ export default function EligibilityChecker() {
               id="incomeRange"
               value={formData.incomeRange} 
               onChange={(e) => setFormData(prev => ({ ...prev, incomeRange: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm lg:text-base"
             >
               <option value="">Select Income Range</option>
               <option value="0-1l">Below ₹1 Lakh</option>
@@ -83,7 +83,7 @@ export default function EligibilityChecker() {
               id="educationLevel"
               value={formData.educationLevel} 
               onChange={(e) => setFormData(prev => ({ ...prev, educationLevel: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm lg:text-base"
             >
               <option value="">Select Education Level</option>
               <option value="school">School (Class 10-12)</option>
@@ -99,7 +99,7 @@ export default function EligibilityChecker() {
               id="category"
               value={formData.category} 
               onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 lg:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm lg:text-base"
             >
               <option value="">Select Category</option>
               <option value="general">General</option>
@@ -113,7 +113,7 @@ export default function EligibilityChecker() {
 
         <Button 
           type="submit" 
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 lg:py-3 px-4 lg:px-6 rounded-lg text-sm lg:text-base"
           disabled={isChecking}
         >
           {isChecking ? 'Checking Eligibility...' : 'Check Eligibility'}

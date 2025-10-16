@@ -23,15 +23,19 @@ export default function HomePage() {
       
       <main>
         <Hero />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <EligibilityChecker />
-            <div className="space-y-8">
-              <Stats />
-              <SuccessStories />
-            </div>
-          </div>
+        
+        {/* Eligibility Checker - Full Width */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <EligibilityChecker />
         </div>
+        
+        {/* Stats - Full Width */}
+        <Stats />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <SuccessStories />
+        </div>
+        
         <Features />
         <Testimonials />
         <CTA />
